@@ -11,21 +11,21 @@
         "lines": [
           1,
           1,
-          2,
-          2,
-          1,
-          1,
+          0,
+          0,
+          0,
+          0,
           null,
           null,
           1,
-          2,
-          2,
-          2,
+          0,
+          0,
+          0,
           null,
           null
         ]
       },
-      "/Users/kirqe/Desktop/disqb/app/models/post.rb": {
+      "/Users/kirqe/Desktop/disqb/app/models/user.rb": {
         "lines": [
           null,
           null,
@@ -38,23 +38,35 @@
           null,
           null,
           null,
-          1,
-          1,
-          null,
-          null,
-          null,
-          1,
           null,
           null,
           null,
           null,
           1,
+          1,
+          1,
+          null,
+          1,
           null,
           null,
+          1,
           null,
           null,
+          1,
+          1,
+          5,
+          5,
+          5,
           null,
-          2,
+          5,
+          null,
+          null,
+          1,
+          5,
+          5,
+          5,
+          null,
+          null,
           null
         ]
       },
@@ -69,6 +81,41 @@
         "lines": [
           0,
           0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/kirqe/Desktop/disqb/app/models/post.rb": {
+        "lines": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
           0,
           0
         ],
@@ -157,6 +204,6 @@
         }
       }
     },
-    "timestamp": 1622905769
+    "timestamp": 1622911256
   }
 }
