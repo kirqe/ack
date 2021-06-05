@@ -1,0 +1,11 @@
+<div class="show ">
+  <h1 class="title"><%= post_link(@post) %></h1>
+
+  <% unless @post.url.empty? %>
+  <span class="ext"><%= @post.url %></span>
+  <% end %>
+
+  <% unless @post.body.empty? %>
+  <p><%= @post.body %></p>
+  <% end %>
+</div>

@@ -1,0 +1,22 @@
+<%= form_with(model: post, class: "form") do |f| %>
+<div class="form-group">
+  <div class="field">
+    <%= f.text_field :name, placeholder: "Title" %>
+    <%= error_tag(post, :name, :title) %>
+  </div>
+  <div class="field">
+
+    <%= f.text_field :url, placeholder: "Url" %>
+    <%= error_tag(post, :url) %>
+  </div>
+  <div class="field">
+
+    <%= f.text_area :body, rows: 10, placeholder: "Text (optional)" %>
+    <%= error_tag(post, :body) %>
+  </div>
+  <div class="form-actions">
+    <%= link_to "cancel", "#", class: "btn " %>
+    <%= f.submit "submit", class: "btn wide bg-red" %>
+  </div>
+</div>
+<% end %>

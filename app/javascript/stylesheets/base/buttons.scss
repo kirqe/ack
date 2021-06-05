@@ -1,0 +1,15 @@
+
+.btn {
+  @apply cursor-pointer uppercase font-bold text-sm;
+  @apply bg-gray-400 text-white;
+  @apply py-2 px-3 rounded-md;
+  @apply flex items-center justify-center;
+
+  &.wide {
+    @apply flex flex-1;
+  }
+}
+
+.bg-red {
+  @apply bg-red-400;
+}

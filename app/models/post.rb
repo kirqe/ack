@@ -15,8 +15,15 @@ class Post < ApplicationRecord
     length: { minimum:3, maximum: 200 }
 
   validates :url, 
-    format: { with: URI::DEFAULT_PARSER.regexp[:ABS_URI] }
+    presence: true,
+    format: { with: URI::DEFAULT_PARSER.regexp[:ABS_URI] },
+    allow_blank: true
 
   validates :body,
-    length: { minimum:3, maximum: 5000}
+    presence: true,
+    length: { minimum:3, maximum: 5000},
+    allow_blank: true
+
+
+  scope :newest_first, -> { order("created_at DESC") }
 end

@@ -29,10 +29,26 @@ RSpec.describe Post, type: :model do
       expect(post).not_to be_valid
     end
 
-    it "is invalid if body is empty" do
+    it "is invalid based on presence of the fields" do
       post = create(:post)
-
+      post.name = ""
+      post.url = ""
       post.body = ""
+      expect(post).not_to be_valid
+
+      post.name = "123123123"
+      post.url = ""
+      post.body = ""
+      expect(post).to be_valid
+
+      post.name = ""
+      post.url = "123123123"
+      post.body = ""
+      expect(post).not_to be_valid
+
+      post.name = ""
+      post.url = ""
+      post.body = "123123123"
       expect(post).not_to be_valid
     end
 
@@ -58,6 +74,16 @@ RSpec.describe Post, type: :model do
       post.url = "https://sfd>.com"
       expect(post).not_to be_valid
     end
-
   end
+
+  describe "scopes" do
+    it "#shows newest posts in the first place" do
+      post1 = create(:post)
+      post2 = create(:post)
+      post3 = create(:post)
+
+      expect(Post.newest_first).to eq([post3, post2, post1])
+    end
+  end
+  
 end

@@ -1,0 +1,28 @@
+
+
+.field_with_errors input,
+.field_with_errors textarea {
+  @apply border-2 border-red-400;
+}
+
+
+.form {
+  
+  
+
+
+
+}
+.form-group {
+  .field {
+    button, input, optgroup, select, textarea {
+      @apply w-full px-2 py-2 border border-gray-200 rounded  appearance-none bg-white;
+    }
+    
+    @apply pb-3;
+  }
+    .form-actions {
+    @apply flex justify-end space-x-3;
+  }
+ }
+

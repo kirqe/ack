@@ -1,0 +1,14 @@
+
+.show {
+  @apply break-all space-y-3 text-gray-600;
+
+  .title {
+    @apply text-2xl font-bold text-gray-600;
+  }
+  .ext {
+    @apply text-gray-300 text-sm;
+  }
+  .text {
+
+  }
+}

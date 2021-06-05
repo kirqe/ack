@@ -13,7 +13,21 @@
 </head>
 
 <body>
-  <%= yield %>
+  <div class="container">
+    <div class="boards">
+      
+    </div>
+
+    <div class="header">
+      <a href="/" class="title"><span class="text-red-400">D</span>isqb</a>
+      <span class="right">
+        <%= render "layouts/actions" %>
+      </span>
+    </div>
+    
+    <div class="inner">
+      <%= yield %>
+    </div>
 </body>
 
 </html>

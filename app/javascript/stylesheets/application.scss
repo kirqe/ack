@@ -4,4 +4,8 @@
 
 /* Add any custom CSS here */
 @import "tailwindcss/utilities";
-@import "base/home";
+@import "base/base";
+@import "base/buttons";
+@import "posts/form";
+@import "posts/index";
+@import "posts/show";
