@@ -23,6 +23,8 @@ class User < ApplicationRecord
   validates :ip,
     presence: true
 
+  has_many :posts
+
   private
     def generate_display_name
       adj = Faker::Creature::Bird.silly_adjective

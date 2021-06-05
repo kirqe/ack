@@ -6,7 +6,11 @@
     @apply text-2xl font-bold text-gray-600;
   }
   .ext {
-    @apply text-gray-300 text-sm;
+    @apply text-gray-400 text-sm;
+  }
+  .byline {
+    @apply text-sm text-gray-400;
+    @apply flex;
   }
   .text {
 

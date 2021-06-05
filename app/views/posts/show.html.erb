@@ -5,6 +5,8 @@
   <span class="ext"><%= @post.url %></span>
   <% end %>
 
+  <span class="byline">by: <%= @post.user.name %></span>
+
   <% unless @post.body.empty? %>
   <p><%= @post.body %></p>
   <% end %>

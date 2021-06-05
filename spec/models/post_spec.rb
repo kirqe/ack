@@ -8,6 +8,15 @@
 #  url        :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  user_id    :bigint           not null
+#
+# Indexes
+#
+#  index_posts_on_user_id  (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
 #
 require 'rails_helper'
 
@@ -85,5 +94,16 @@ RSpec.describe Post, type: :model do
       expect(Post.newest_first).to eq([post3, post2, post1])
     end
   end
+
+  describe "assoc" do
+    it "#post-user assoc works" do
+      user = create(:user)
+      post = create(:post, user: user)
+
+      expect(post.user).to eq(user)
+    end
+    
+  end
+  
   
 end

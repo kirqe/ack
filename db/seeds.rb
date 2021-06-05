@@ -7,8 +7,15 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-100.times do
-  name = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis n
-ostrud exercitation ullamco laboris nisi utt".split.shuffle.join(" ")
-  Post.create(name: name, url: "http://localhost", body: name)
+users = []
+10.times do 
+  users << User.create(ip: Faker::Internet.ip_v4_address)
+end
+
+50.times do
+  Post.create(
+    user: users.sample,
+    name: Faker::Lorem.sentence(word_count: rand(4..10)), 
+    url: "http://localhost", 
+    body: Faker::Lorem.paragraph(sentence_count: rand(3..7)))
 end
