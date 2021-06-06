@@ -1,18 +1,58 @@
+#show {
+  
+}
 
-.show {
+#show .post-wrapper {
+  @apply flex flex-col;
+  @apply bg-gray-50 rounded-md;
+}
+
+#show .side { 
+  @apply flex justify-between items-center;
+  @apply flex-shrink-0 flex-grow-0 bg-gray-100 rounded-t-md p-4;
+  
+  .votes-inner {
+
+  }
+
+  .votes {
+    @apply text-gray-600 text-lg font-bold;
+  }
+
+  .votes-inner {
+    @apply flex flex-col items-center;  
+  }
+}
+
+@screen sm {
+  #show .post-wrapper {
+    @apply flex flex-row;
+  }
+  
+  #show .side  {
+    @apply flex flex-col rounded-l-md rounded-r-none py-4 w-20;
+  }
+}
+
+#show .details {
+  @apply flex flex-col p-4 ;
   @apply break-all space-y-3 text-gray-600;
 
   .title {
     @apply text-2xl font-bold text-gray-600;
   }
-  .ext {
+
+  .after {
     @apply text-gray-400 text-sm;
   }
+
   .byline {
     @apply text-sm text-gray-400;
     @apply flex;
   }
+
   .text {
 
   }
 }
+

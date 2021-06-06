@@ -1,48 +1,67 @@
+#index {
 
-.posts {
-  @apply divide-y divide-gray-100;
 }
 
-.post {
-  @apply flex;  
-  @apply py-3;
+#index .posts {
+// apply divide-y divide-gray-100;
+}
+
+#index .post {
+  @apply flex;
+  @apply bg-gray-50 rounded-md mb-1;
+
+  &.pinned {
+    @apply bg-gray-100;
+  }
+}
+
+#index .post .side {
+  @apply flex justify-center items-start w-20;
+  @apply flex-shrink-0 flex-grow-0  p-3;
 
   .votes {
-    @apply py-1;
-    @apply flex flex-shrink-0 flex-col;
-    @apply items-center justify-start;
-    @apply text-lg font-bold;
-    @apply text-gray-600;
+    @apply text-gray-600 text-lg font-bold;
   }
 
-  .details {
-    @apply flex flex-col w-full justify-between;
-    @apply px-3;
-
-    .title {
-      @apply font-bold text-gray-600 leading-5;
-      @apply break-all;  
-    }    
-
-    .byline {
-      @apply text-sm text-gray-400;
-      @apply flex;
-    }
-   
+  .votes-inner {
+    @apply flex flex-col items-center;  
   }
 }
 
-.votes {
+#index .post .details {
+  @apply flex flex-col p-2 pl-0 w-full justify-between;
+  @apply break-all text-gray-600;
+
+  .title {
+    @apply font-bold text-gray-600 leading-5; 
+  }
+
+  .after {
+    @apply text-sm text-gray-400;
+    @apply flex w-full flex-col;
+  }
+
+  .footer {
+    @apply text-sm text-gray-400;
+    @apply flex w-full flex-col;
+  }
+}
+
+@screen sm {
+
+}
+
+
+.vote-up {
+  @apply mb-1;
+  
   &:hover {
     svg {
       @apply bg-red-400 text-white;
     }
   }
 }
-.votes-inner {
-  @apply flex flex-col items-center  mx-4;
-  
-}
+
 
 
 // aka categors on top of the page
@@ -58,7 +77,7 @@
     @apply flex items-center justify-center;
 
     &.current {
-      @apply  text-white bg-red-400 border-red-400;
+      @apply text-white bg-red-400 border-red-400;
     }
     &:hover, &.new {
       @apply border-red-400;

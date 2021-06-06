@@ -102,8 +102,5 @@ RSpec.describe Post, type: :model do
 
       expect(post.user).to eq(user)
     end
-    
-  end
-  
-  
+  end  
 end

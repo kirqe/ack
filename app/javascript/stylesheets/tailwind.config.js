@@ -15,7 +15,7 @@ module.exports = {
          lg: "768px",
          xl: "768px"
         }
-      }   
+      }
     },
   },
   variants: {

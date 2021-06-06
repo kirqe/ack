@@ -7,12 +7,9 @@
 
 
 .form {
-  
-  
-
-
-
+  @apply bg-gray-50 rounded-md p-4 border-2;
 }
+
 .form-group {
   .field {
     button, input, optgroup, select, textarea {

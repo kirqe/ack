@@ -1,13 +1,41 @@
-<div class="show ">
-  <h1 class="title"><%= post_link(@post) %></h1>
+<div id="show">
+  <div class="post-wrapper">
+    <div class="side">
+      <div class="votes">
+        <div class="votes-inner">
+          <%= link_to "#", class: "vote-up voted" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 bg-gray-200 rounded" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd" />
+          </svg>
+          <% end %>
+          <span>0</span>
+        </div>
+      </div>
 
-  <% unless @post.url.empty? %>
-  <span class="ext"><%= @post.url %></span>
-  <% end %>
+      <div>
+        <%= link_to @post do %>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-200" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+          </svg>
+        <% end %>
+      </div>
+    </div>
 
-  <span class="byline">by: <%= @post.user.name %></span>
+    <div class="details">
+      <span class="byline">
+        <img src="<%= gravatar_url(@post.user.id) %>" class="rounded-full mr-1 w-5 h-5">
+        by <%= @post.user.name %> <%= time_ago_in_words(@post.created_at) %> ago
+      </span>
 
-  <% unless @post.body.empty? %>
-  <p><%= @post.body %></p>
-  <% end %>
+      <h1 class="title"><%= post_link(@post) %></h1>
+
+      <% unless @post.url.empty? %>
+      <span class="after"><%= @post.url %></span>
+      <% end %>
+
+      <% unless @post.body.empty? %>
+      <p class="text"><%= @post.body %></p>
+      <% end %>
+    </div>
+  </div>
 </div>

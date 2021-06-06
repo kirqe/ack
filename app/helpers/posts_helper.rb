@@ -11,4 +11,8 @@ module PostsHelper
     return unless errors.any?
     content_tag(:span, "#{t || field} #{errors.first}", class: "text-sm text-red-400 font-bold")
   end
+
+  def gravatar_url(str)
+    "http://gravatar.com/avatar/#{Digest::MD5.hexdigest("#{str}")}?d=identicon&r=PG&s=100"
+  end
 end
