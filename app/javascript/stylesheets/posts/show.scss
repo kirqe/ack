@@ -36,14 +36,14 @@
 
 #show .details {
   @apply flex flex-col p-4 ;
-  @apply break-all space-y-3 text-gray-600;
+  @apply break-words space-y-3 text-gray-600;
 
   .title {
     @apply text-2xl font-bold text-gray-600;
   }
 
   .after {
-    @apply text-gray-400 text-sm;
+    @apply text-gray-400 text-sm break-all;
   }
 
   .byline {
@@ -52,7 +52,7 @@
   }
 
   .text {
-
+    @apply whitespace-pre-wrap;
   }
 }
 

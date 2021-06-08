@@ -30,7 +30,7 @@
 
 #index .post .details {
   @apply flex flex-col p-2 pl-0 w-full justify-between;
-  @apply break-all text-gray-600;
+  @apply break-words text-gray-600;
 
   .title {
     @apply font-bold text-gray-600 leading-5; 

@@ -1,25 +1,55 @@
 
 
-.field_with_errors input,
-.field_with_errors textarea {
-  @apply border-2 border-red-400;
-}
 
 
 .form {
-  @apply bg-gray-50 rounded-md p-4 border-2;
+  @apply bg-gray-50 rounded-md p-4;
 }
 
-.form-group {
-  .field {
-    button, input, optgroup, select, textarea {
-      @apply w-full px-2 py-2 border border-gray-200 rounded  appearance-none bg-white;
-    }
-    
-    @apply pb-3;
+
+.field {
+  @apply relative;
+  @apply pb-3;
+  
+  button, input, optgroup, select, textarea {
+    @apply w-full px-2 py-2 border border-gray-200 rounded  appearance-none bg-white text-gray-600;
   }
-    .form-actions {
-    @apply flex justify-end space-x-3;
+  .meta {
+    @apply text-gray-400 flex items-center justify-start p-1 rounded-b-md text-xs;
   }
- }
+}
+
+.form-actions {
+  @apply flex justify-end space-x-3;
+}
+
+.field_with_errors {
+  @apply relative;
+  
+  button, input, optgroup, select, textarea {
+    @apply border-2 border-red-400;
+  }
+}
+
+// .field_with_errors .character-counter,
+// .field .character-counter {
+//   @apply text-xs text-gray-400 bg-white rounded-full border px-1;
+//   @apply absolute bottom-5 right-3;
+//   @apply select-none;
+
+//   &.exceeded {
+//     @apply text-red-400;
+//   }
+// }
+
+.saved-indicator {
+  @apply text-xs text-gray-400;
+  @apply cursor-default;
+  @apply absolute right-4 top-0; 
+  @apply transition-opacity opacity-0 duration-1000;
+
+  &.saving {
+    @apply opacity-100;
+  }
+}
 
