@@ -2,8 +2,14 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show]
 
   def index
-    @posts = Post.newest_first
+    @pagy, @posts = pagy(Post.newest_first)
     @post = Post.new
+    respond_to do |format|
+      format.html
+      format.json {
+        render json: { posts: render_to_string(@posts, formats: [:html] ), pagination: view_context.pagy_nav(@pagy)}
+      }
+    end
   end
 
   def show

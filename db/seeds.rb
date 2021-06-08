@@ -12,10 +12,10 @@ users = []
   users << User.create(ip: Faker::Internet.ip_v4_address)
 end
 
-50.times do
+50.times do |i|
   Post.create(
     user: users.sample,
-    name: Faker::Lorem.sentence(word_count: rand(4..10)), 
+    name: "#{i} ---", 
     url: "http://localhost", 
     body: Faker::Lorem.paragraph(sentence_count: rand(3..7)))
 end

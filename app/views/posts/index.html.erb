@@ -1,6 +1,12 @@
 <div id="index">
   <%= render "posts/form", post: @post %>
-  <div class="posts">
-    <%= render @posts %>
+  <div class="posts" data-controller="infinite-scroll" data-action="scroll@window->infinite-scroll#scroll">
+      <div data-infinite-scroll-target="posts">
+      <%= render @posts %>
+      </div>
+      
+      <div class="hidden" data-infinite-scroll-target="pagination">
+        <%== pagy_nav(@pagy) %>
+      </div>
   </div>
 </div>
