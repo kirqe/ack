@@ -1,0 +1,13 @@
+<div id="index">
+  <%= render partial: "posts/form", locals: { board: @board } %>
+
+  <div class="posts" data-controller="infinite-scroll" data-action="scroll@window->infinite-scroll#scroll">
+    <div data-infinite-scroll-target="posts">
+      <%= render @posts %>
+    </div>
+
+    <div class="hidden" data-infinite-scroll-target="pagination">
+      <%== pagy_nav(@pagy) %>
+    </div>
+  </div>
+</div>

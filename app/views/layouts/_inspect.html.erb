@@ -1,0 +1,15 @@
+<% if Rails.env == "development" %>
+<div class="bg-gray-100 text-gray-600 rounded-md p-3 my-3">
+  <p><%= params %></p>
+  <p>latestPost: <span id="ls"></span></p>
+  <p>isPostFormHidden: <span id="pf"></span></p>
+
+
+  <script>
+    setInterval(() => {
+      document.querySelector("#ls").innerText = localStorage.getItem("latestPost")
+      document.querySelector("#pf").innerText = localStorage.getItem("isPostFormHidden")
+    }, 2000);
+  </script>
+</div>
+<% end %>

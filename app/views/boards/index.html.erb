@@ -1,0 +1,8 @@
+<% @boards.each do |board| %>
+<div class=" bg-gray-50 p-4 mb-1 rounded-md flex justify-between items-center">
+  <div class="body">
+    <%= link_to board.name, board_path(board.slug), class: "font-bold text-gray-600" %>
+    <p class="text-gray-400"><%= board.body %></p>
+  </div>
+</div>
+<% end %>

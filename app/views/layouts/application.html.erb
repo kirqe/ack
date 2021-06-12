@@ -13,13 +13,17 @@
 </head>
 
 <body>
-  <div class="container" data-controller="global form">
-    <div class="boards">
+  <div class="container" data-controller="global">
+    <%= render "layouts/inspect" %>
 
+    <div id="boards">
+      <% Board.all.each do |board| %>
+      <%= link_to board.slug, board_path(board.slug), class: "board #{'current' if is_hg?(board)}" %>
+      <% end %>
     </div>
 
     <div class="header">
-      <a href="/" class="title"><span class="text-red-400">D</span>isqb</a>
+      <a href="/" class="title"><span class="text-primary">D</span>isqb</a>
       <span class="right">
         <%= render "layouts/actions" %>
       </span>

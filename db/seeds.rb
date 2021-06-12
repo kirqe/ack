@@ -6,16 +6,21 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+boards = []
+boards << Board.create(name: "one", slug: "one", body: "description")
+boards << Board.create(name: "two", slug: "two", body: "description")
+Board.create(name: "three", slug: "three", body: "description")
 
 users = []
 10.times do 
   users << User.create(ip: Faker::Internet.ip_v4_address)
 end
 
-50.times do |i|
+70.times do |i|
   Post.create(
     user: users.sample,
     name: "#{i} ---", 
     url: "http://localhost", 
-    body: Faker::Lorem.paragraph(sentence_count: rand(3..7)))
+    body: Faker::Lorem.paragraph(sentence_count: rand(3..7)),
+    board: boards.sample)
 end

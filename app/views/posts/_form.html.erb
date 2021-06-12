@@ -1,44 +1,44 @@
-<div class="form-wrapper relative" data-form-target="formWrapper">
-  <span data-form-target="indicator" class="saved-indicator">saved</span>
+<div class="panel" data-controller="post-form" data-global-target="postFormWrapper" data-post-form-target="wrapper">
 
-  <%= form_with(model: post, class: "form my-1 hidden", local: false,
-    data: { "global-target": "newPostForm", 
-            "form-target": "newPostForm",
-    action: "ajax:success->form#onPostSuccess 
-             ajax:error->form#onPostError"
+  <span data-post-form-target="indicator" class="saved-indicator">saved</span>
+  <%= form_with(model: [:board, post], class: "form ", local: false,
+    data: { "global-target": "postForm", 
+            "post-form-target": "form",
+    action: "ajax:success->post-form#onPostSuccess 
+             ajax:error->post-form#onPostError"
   }) do |f| %>
 
   <div class="form-group">
     <div class="field">
-      <%= f.text_field :name, placeholder: "Title", required: true, 
-      data: { "form-target": "name", 
-      action: "keyup->form#backUp" } %>
+      <%= f.text_field :name, placeholder: "Title", 
+      data: { "post-form-target": "name", 
+      action: "keyup->post-form#backUp" } %>
       <%= error_tag(post, :name, :title) %>
     </div>
 
     <div class="field">
       <%= f.text_field :url, placeholder: "Url (optional)", 
-      data: { "form-target": "url", 
-      action: "keyup -> form#backUp" } %>
+      data: { "post-form-target": "url", 
+      action: "keyup -> post-form#backUp" } %>
       <%= error_tag(post, :url) %>
     </div>
 
     <div class="field">
       <%= f.text_area :body, rows: 10, placeholder: "Text (optional)", maxlength: 5000,
-      data: {  "form-target": "body", 
-      action: "input->form#backUp input->form#countCharacters"} %>
+      data: {  "post-form-target": "body", 
+      action: "input->post-form#backUp input->post-form#countCharacters"} %>
       <%= error_tag(post, :body) %>
       <div class="meta">
-        <span data-form-target="characterCount"></span>
+        <span data-post-form-target="characterCount"></span>
       </div>
     </div>
 
-    <%= button_tag(type: "submit", class: "btn wide bg-red", data: { "form-target": "submitButton" }) do %>
-      <svg class="-ml-1 mr-3 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-      </svg>
-      Submit
+    <%= button_tag(type: "submit", class: "btn wide bg-primary", data: { "post-form-target": "submitButton" }) do %>
+    <svg class="-ml-1 mr-3 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+    </svg>
+    Submit
     <% end %>
 
   </div>

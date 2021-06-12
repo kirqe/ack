@@ -1,0 +1,15 @@
+<div class="form-wrapper">
+  <%= form_with(model: @board, class: "form my-1") do |f| %>
+  <div class="field">
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= f.text_field :slug %>
+  </div>
+
+  <div class="field">
+    <%= f.text_area :body %>
+  </div>
+  <% end %>
+</div>

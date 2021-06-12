@@ -3,10 +3,10 @@
 }
 
 #index .posts {
-// apply divide-y divide-gray-100;
+
 }
 
-#index .post {
+#index .posts .post {
   @apply flex;
   @apply bg-gray-50 rounded-md mb-1;
 
@@ -15,7 +15,7 @@
   }
 }
 
-#index .post .side {
+#index .posts .post .side {
   @apply flex justify-center items-start w-20;
   @apply flex-shrink-0 flex-grow-0  p-3;
 
@@ -28,7 +28,7 @@
   }
 }
 
-#index .post .details {
+#index .posts .post .details {
   @apply flex flex-col p-2 pl-0 w-full justify-between;
   @apply break-words text-gray-600;
 
@@ -47,29 +47,29 @@
   }
 }
 
-@screen sm {
-
-}
-
-
 .vote-up {
   @apply mb-1;
   
   &:hover {
     svg {
-      @apply bg-red-400 text-white;
+      @apply bg-primary text-white;
     }
   }
 }
 
+#settings {
+  @apply text-sm;
+}
+
+
 
 
 // aka categors on top of the page
-.boards {
+#boards {
   @apply text-sm;
   @apply flex space-x-1;
   @apply ns overflow-x-auto;
-  @apply py-3 mx-3 my-3 ;
+  @apply py-3 m-3;
 
   .board {
     @apply text-gray-500 font-bold;
@@ -77,11 +77,10 @@
     @apply flex items-center justify-center;
 
     &.current {
-      @apply text-white bg-red-400 border-red-400;
+      @apply text-white bg-primary border-primary;
     }
-    &:hover, &.new {
-      @apply border-red-400;
+    &:hover {
+      @apply border-primary;
     }    
   }
-
 }

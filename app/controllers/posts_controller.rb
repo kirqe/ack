@@ -1,9 +1,11 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show]
+  before_action :set_board, only: [:index, :create]
 
-  def index
-    @pagy, @posts = pagy(Post.newest_first)
-    @post = Post.new
+  def index  
+    @pagy, @posts = pagy(@board.posts.newest_first)
+    @post = @board.posts.new
+
     respond_to do |format|
       format.html
       format.json {
@@ -17,7 +19,7 @@ class PostsController < ApplicationController
 
   def create
     set_user unless token_exists?
-    @post = Post.new(post_params)
+    @post = @board.posts.new(post_params)
     @post.user = current_user
     
     respond_to do |format|
@@ -39,6 +41,10 @@ class PostsController < ApplicationController
   private
     def set_post
       @post = Post.find(params[:id])
+    end
+    
+    def set_board
+      @board = Board.find_by(slug: params[:board_id])
     end
 
     def post_params

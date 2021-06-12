@@ -1,32 +1,35 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static targets = ["newPostForm", "toggleFormBtn"]
+  static targets = ["postFormWrapper", "togglePostFormBtn"]
+  // postForm
+  // boardForm
 
   connect() {
-    if (this.hasNewPostFormTarget) {
+    if (this.hasPostFormWrapperTarget) {
       if (localStorage.getItem("isPostFormHidden") == "false") {
-        this.newPostFormTarget.classList.remove("hidden")
-        this.toggleFormBtnTarget.text = "Close Form"
+        this.postFormWrapperTarget.classList.remove("hidden")
+        this.togglePostFormBtnTarget.text = "Close Form"
+      } else {
+        this.postFormWrapperTarget.classList.add("hidden")
       }
     }
   }
 
   toggleForm(e) {
     e.preventDefault()
-    if (this.newPostFormTarget.classList.contains("hidden")) {
+    if (this.postFormWrapperTarget.classList.contains("hidden")) {
       localStorage.setItem("isPostFormHidden", "false")
-
     } else {
       localStorage.setItem("isPostFormHidden", "true")
-
     }
-    this.newPostFormTarget.classList.toggle("hidden")
+    this.postFormWrapperTarget.classList.toggle("hidden")
     
-    this.toggleFormBtnTarget.text = 
-      (this.newPostFormTarget.classList.contains("hidden")) ? "Add" : "Close Form"
-    
+    this.togglePostFormBtnTarget.text = 
+      (this.postFormWrapperTarget.classList.contains("hidden")) ? "Add" : "Close Form"
+  }
 
-
+  toggleSettings(e) {
+    e.preventDefault()
   }
 }

@@ -4,7 +4,7 @@ import Turbolinks from "turbolinks"
 import debounce from 'lodash/debounce'
 
 export default class extends Controller {
-  static targets = ["formWrapper", "newPostForm", 
+  static targets = ["wrapper", "form", 
                     "name", "url", "body", 
                     "indicator", "characterCount",
                     "submitButton"]
@@ -14,7 +14,7 @@ export default class extends Controller {
   }
 
   initialize(){
-    if (this.hasNewPostFormTarget) {
+    if (this.hasFormTarget) {
       this.backUp = debounce(this.backUp, 2000).bind(this)
 
       this.loadDataFromLocalStorage()
@@ -23,7 +23,7 @@ export default class extends Controller {
   }
 
   onPostSuccess(event) {
-    this.newPostFormTarget.classList.add("hidden") 
+    this.wrapperTarget.classList.add("hidden") 
     localStorage.removeItem("latestPost")
     let [response, status, xhr] = event.detail;
     Turbolinks.visit(response.url, { action: "replace" })
@@ -32,13 +32,13 @@ export default class extends Controller {
   onPostError(event) {
     let [response, status, xhr] = event.detail;
     console.log(response)
-    this.formWrapperTarget.innerHTML = response
+    this.wrapperTarget.outerHTML = response
     this.countCharacters()
-    this.newPostFormTarget.classList.remove("hidden") // by default the form is hidden
+    this.formTarget.classList.remove("hidden") // by default the form is hidden
     this.submitButtonTarget.classList.remove("submitted")
   }
 
-  // save current post to localStorage
+  // save current post to the localStorage
   backUp(e) {
     this.indicatorTarget.classList.add("saving")
 
@@ -54,7 +54,7 @@ export default class extends Controller {
     }, 2000)
   }
 
-  // restore latest post on page reload
+  // restore latest post from the localStorage
   loadDataFromLocalStorage() {
     if (localStorage.getItem("latestPost") !== null ) {
       let latestPost = JSON.parse(localStorage.getItem("latestPost"))

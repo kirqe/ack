@@ -1,5 +1,7 @@
 <span class="actions">
   <span class="action">
-    <%= link_to "add", "#", data: { action: "click -> global#toggleForm", "global-target": "toggleFormBtn" } %>
+    <% if controller_name == "posts" %>
+    <a href="#" data-global-target="togglePostFormBtn" data-action="click -> global#toggleForm">Add</a>
+    <% end %>
   </span>
 </span>
