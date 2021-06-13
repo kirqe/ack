@@ -1,21 +1,22 @@
 <div id="show">
   <div class="post-wrapper">
     <div class="side">
-      <div class="votes">
+      <div class="votes" data-controller="votes">
         <div class="votes-inner">
-          <%= link_to "#", class: "vote-up voted" do %>
+          <%= link_to "#", class: "vote-up #{'voted' if current_user.voted_for?(@post)}", 
+        data: {"votes-target": "voteBtn", action: "click->votes#vote", url: vote_post_path(@post)} do %>
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 bg-gray-200 rounded" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd" />
           </svg>
           <% end %>
-          <span>0</span>
+          <span data-votes-target="score"><%= @post.votes_count %></span>
         </div>
       </div>
 
       <%= link_to board_post_path(@post.board.slug, @post) do %>
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-200" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
-        </svg>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-200" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+      </svg>
       <% end %>
     </div>
 

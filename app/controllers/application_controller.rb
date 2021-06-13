@@ -1,9 +1,12 @@
 class ApplicationController < ActionController::Base
   include Pagy::Backend
   helper_method [:current_user, :has_token?]
-
+  before_action :current_user
+  
   def current_user
     @current_user = User.find_by(token: cookies[:token]) if cookies[:token]
+    set_user unless @current_user 
+    @current_user 
   end
 
   def set_user

@@ -24,6 +24,11 @@ class User < ApplicationRecord
     presence: true
 
   has_many :posts
+  has_many :votes
+
+  def voted_for?(votable)
+    !votable.votes.find_by(user_id: self).nil?
+  end
 
   private
     def generate_display_name

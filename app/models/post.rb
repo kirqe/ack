@@ -2,14 +2,15 @@
 #
 # Table name: posts
 #
-#  id         :bigint           not null, primary key
-#  body       :text
-#  name       :string           not null
-#  url        :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  board_id   :bigint           not null
-#  user_id    :bigint           not null
+#  id          :bigint           not null, primary key
+#  body        :text
+#  name        :string           not null
+#  url         :string
+#  votes_count :integer          default(0)
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  board_id    :bigint           not null
+#  user_id     :bigint           not null
 #
 # Indexes
 #
@@ -39,5 +40,8 @@ class Post < ApplicationRecord
   belongs_to :user
   belongs_to :board
 
+  has_many :votes, as: :votable, dependent: :destroy
+
   scope :newest_first, -> { order("created_at DESC") }
+  scope :top_rated, -> { order("votes_count DESC") }
 end

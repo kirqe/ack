@@ -18,7 +18,6 @@ class PostsController < ApplicationController
   end
 
   def create
-    set_user unless token_exists?
     @post = @board.posts.new(post_params)
     @post.user = current_user
     

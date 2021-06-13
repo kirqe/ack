@@ -2,14 +2,15 @@
 #
 # Table name: posts
 #
-#  id         :bigint           not null, primary key
-#  body       :text
-#  name       :string           not null
-#  url        :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  board_id   :bigint           not null
-#  user_id    :bigint           not null
+#  id          :bigint           not null, primary key
+#  body        :text
+#  name        :string           not null
+#  url         :string
+#  votes_count :integer          default(0)
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  board_id    :bigint           not null
+#  user_id     :bigint           not null
 #
 # Indexes
 #
