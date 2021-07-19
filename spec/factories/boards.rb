@@ -6,6 +6,7 @@
 #  approved_at :datetime
 #  body        :text
 #  name        :string           not null
+#  posts_count :integer          default(0)
 #  slug        :string           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null

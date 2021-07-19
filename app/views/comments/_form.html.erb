@@ -1,0 +1,30 @@
+<% comment ||= commentable.comments.new %>
+
+<%= form_with(model: [commentable, comment], multipart: true, class: "form", local: false,
+  data: {
+    type: "json",
+    "comments-target": "form",
+    controller: "uploads",
+    "uploads-container-id-value": "pu_#{commentable.id}}",
+  action: "
+    ajax:success->comments#onPostSuccess 
+    ajax:error->comments#onPostError 
+    dragenter->uploads#onDrag
+    dragleave->uploads#onDrag
+    dragover->uploads#onDragOver
+    drop->uploads#onDrop"  
+}) do |f| %>
+
+
+<div class="field">
+  <%= f.text_area :body, rows: 5, placeholder: "What are your thoughts?", class: "comment-body",
+  data: { "uploads-target": "dropzone" } %>
+  <%= error_tag(comment, :body, :comment) %>
+  <%= error_tag(comment, :file) %>
+</div>
+
+<div class="attachments" 
+data-uploads-target="attachments"></div>
+
+<%= f.submit "Comment", class: "btn bg-primary" %>
+<% end %>

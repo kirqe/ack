@@ -25,6 +25,7 @@ class User < ApplicationRecord
 
   has_many :posts
   has_many :votes
+  has_many :comments
 
   def voted_for?(votable)
     !votable.votes.find_by(user_id: self).nil?

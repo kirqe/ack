@@ -17,7 +17,16 @@ module.exports = {
         }
       },
       colors: {
-        primary: "#8888E4"
+        // primary: "#75B37F"
+        // primary: "#8888E4"
+        "primary": "var(--accent)",
+        "primary-light": "var(--accent-light)",
+        "primary-lighter": "var(--accent-lighter)",
+        "primary-lightest": "var(--accent-lightest)",
+        
+      },
+      gridAutoRows: {
+        "200": "200px"
       }
     },
   },

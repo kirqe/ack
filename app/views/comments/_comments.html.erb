@@ -1,0 +1,7 @@
+<% commentable.comments.where(parent_id: nil, depth: 1).order("created_at DESC").each do |comment| %> 
+
+    <%= render "comments/comment", 
+      comment: comment, 
+      commentable: commentable %>
+
+<% end %>

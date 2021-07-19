@@ -1,0 +1,73 @@
+
+.comments-wrapper {
+  @apply bg-primary-lightest rounded-md pb-6;
+}
+
+.comments-wrapper .comments-stats {
+  @apply text-sm text-gray-400 px-3 p-3 pb-0 h-7 flex;
+
+  .stats-item {
+    @apply flex items-center;
+  }
+}
+
+.comments-wrapper .comments-form-wrapper {
+  @apply mb-3 p-4 rounded-md;
+}
+
+.comments-wrapper .comments {
+  @apply px-4;
+}
+
+.comments-wrapper .comments .comment {
+  @apply text-gray-600 mt-6;
+
+  .meta {
+    @apply mb-3 text-gray-400 flex items-center text-sm;
+  }
+  .body {
+
+  }
+  .footer {
+    @apply text-sm text-gray-400;
+  }
+  .expand-count {
+    @apply bg-primary rounded px-1 text-xs font-bold text-white;
+  }
+}
+
+.comments-wrapper .comments .comment .body,
+.comments-wrapper .comments .comment .attachments,
+.comments-wrapper .comments-form-wrapper .attachments {
+  img {
+    @apply object-scale-down h-24;
+  }
+  a {
+    @apply text-primary underline;
+  }
+}
+
+.comment-body.dragging {
+  @apply border-2 border-dashed border-primary;
+}
+
+.comments-wrapper .comments .replies-wrapper {
+  @apply flex pl-2 pt-1;  
+
+  .toggler {
+    @apply border-l-2 border-dashed border-primary-lighter pl-4;
+    
+    &:hover {
+      @apply hover:border-primary;
+    }    
+  }
+
+  .replies {
+    @apply flex-1;
+  }
+}
+
+
+.attachments.has-attachments {
+    @apply flex flex-col space-y-1 mb-3;  
+}

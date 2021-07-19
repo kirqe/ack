@@ -1,0 +1,31 @@
+<% comment ||= commentable.comments.new(parent: parent) %>
+
+<%= form_with(model: [commentable, comment], namespace: "parent_#{comment.parent.id}", class: "form", local: false,
+  data: {
+    type: "json",
+    "comment-target": "form",
+    controller: "uploads",
+    "uploads-container-id-value": "cu_#{comment.parent.id}",
+  action: "
+    ajax:success->comment#onPostSuccess 
+    ajax:error->comment#onPostError 
+    dragenter->uploads#onDrag
+    dragleave->uploads#onDrag
+    dragover->uploads#onDragOver
+    drop->uploads#onDrop"  
+}) do |f| %>
+
+<%= f.hidden_field :parent_id, value: comment.parent.id %>
+
+<div class="field">
+  <%= f.text_area :body, rows: 5, placeholder: "Reply to #{comment.parent.user.name}", class: "comment-body", 
+    data: { "uploads-target": "dropzone" } %>
+  <%= error_tag(comment, :body, :comment) %>
+  <%= error_tag(comment, :file) %>
+</div>  
+
+<div class="attachments" 
+data-uploads-target="attachments"></div>
+
+<%= f.submit "Reply", class: "btn bg-primary" %>
+<% end %>

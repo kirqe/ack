@@ -1,45 +1,32 @@
-#show {
-  
-}
-
 #show .post-wrapper {
   @apply flex flex-col;
-  @apply bg-gray-50 rounded-md;
+  @apply bg-primary-lightest rounded-md;
 }
 
 #show .side { 
   @apply flex justify-between items-center;
-  @apply flex-shrink-0 flex-grow-0 bg-gray-100 rounded-t-md p-4;
-  
-  .votes-inner {
-
-  }
+  @apply flex-shrink-0 flex-grow-0 bg-primary-lightest rounded-t-md px-4 py-2;
 
   .votes {
     @apply text-gray-600 text-lg font-bold;
   }
 
   .votes-inner {
-    @apply flex flex-col items-center;  
+    @apply flex flex-row items-center space-x-2;  
   }
 }
 
-@screen sm {
-  #show .post-wrapper {
-    @apply flex flex-row;
-  }
-  
-  #show .side  {
-    @apply flex flex-col rounded-l-md rounded-r-none py-4 w-20;
-  }
+#show .votes-inner .vote-up {
+  @apply m-0;
 }
 
 #show .details {
-  @apply flex flex-col p-4 ;
+  @apply flex flex-col p-4 flex-1;
   @apply break-words space-y-3 text-gray-600;
+  @apply min-w-0; // fix for pre
 
   .title {
-    @apply text-2xl font-bold text-gray-600;
+    @apply text-3xl font-bold text-gray-600;
   }
 
   .after {

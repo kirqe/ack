@@ -8,7 +8,7 @@
 
 #index .posts .post {
   @apply flex;
-  @apply bg-gray-50 rounded-md mb-1;
+  @apply bg-primary-lightest rounded-md mb-1;
 
   &.pinned {
     @apply bg-gray-100;
@@ -16,7 +16,7 @@
 }
 
 #index .posts .post .side {
-  @apply flex justify-center items-start w-20;
+  @apply flex  justify-center items-start w-20;
   @apply flex-shrink-0 flex-grow-0  p-3;
 
   .votes {
@@ -66,17 +66,19 @@
 
 
 // aka categors on top of the page
+
 #boards {
   @apply text-sm;
   @apply flex space-x-1;
-  @apply ns overflow-x-auto;
-  @apply py-3 m-3;
+  @apply ns overflow-x-auto flex flex-nowrap;
+  @apply pb-3 mx-3 my-1;
+
 
   .board {
     @apply text-gray-500 font-bold;
-    @apply px-4 h-10 rounded-md border-2 bg-gray-100 ;
-    @apply flex items-center justify-center;
-
+    @apply px-4 h-10 rounded-md border-2 bg-primary-lightest ;
+    @apply flex flex-grow-0 flex-shrink-0 items-center justify-center;
+    @apply border-primary-lighter;
     &.current {
       @apply text-white bg-primary border-primary;
     }

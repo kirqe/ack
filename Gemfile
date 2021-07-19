@@ -13,8 +13,12 @@ gem 'jbuilder', '~> 2.7'
 
 gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
 
+gem 'active_decorator'
+gem 'sanitize'
 gem 'pagy'
 
+gem "aws-sdk-s3", require: false
+gem 'active_storage_validations'
 # gem 'redis', '~> 4.0'
 # gem 'bcrypt', '~> 3.1.7'
 # gem 'image_processing', '~> 1.2'

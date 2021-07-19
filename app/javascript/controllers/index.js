@@ -7,3 +7,12 @@ import { definitionsFromContext } from "stimulus/webpack-helpers"
 const application = Application.start()
 const context = require.context("controllers", true, /_controller\.js$/)
 application.load(definitionsFromContext(context))
+
+// https://github.com/hotwired/stimulus/issues/104#issuecomment-365393601
+document.addEventListener('turbolinks:before-cache', () => {
+  application.controllers.forEach(controller => {
+    if (typeof controller.teardown === 'function') {
+      controller.teardown()
+    }
+  })
+})

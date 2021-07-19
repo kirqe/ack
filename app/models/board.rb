@@ -6,6 +6,7 @@
 #  approved_at :datetime
 #  body        :text
 #  name        :string           not null
+#  posts_count :integer          default(0)
 #  slug        :string           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -25,7 +26,10 @@ class Board < ApplicationRecord
 
   validates :body,
     presence: true,
-    length: {minimum:0, maximum:500}
+    length: {minimum:0, maximum:150}
 
-  has_many :posts
+  has_many :posts, dependent: :destroy
+
+  scope :ordered_by_post_count, -> { order("posts_count DESC") }
+  scope :approved, -> { where.not(approved_at: nil) }
 end

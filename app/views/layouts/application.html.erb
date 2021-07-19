@@ -13,14 +13,30 @@
 </head>
 
 <body>
-  <div class="container" data-controller="global">
-    <%= render "layouts/inspect" %>
+  
 
-    <div id="boards">
+  <div class="container" data-controller="global">
+    <%# render "layouts/inspect" %>
+
+    <ul class="nav items-end">      
+      <li class="nav-item">
+        <a href="#" class="flex">hey, <%= current_user.name %> 
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </a>
+      </li>     
+      <li><%= render "layouts/theme" %></li> 
+    </ul>
+
+    <% if controller_name == "posts" %>
+    <div id="boards" data-controller="boards-nav" data-boards-nav-target="boards">
       <% Board.all.each do |board| %>
-      <%= link_to board.slug, board_path(board.slug), class: "board #{'current' if is_hg?(board)}" %>
+        <%= link_to board.name, board_path(board.slug), 
+          class: "board #{'current' if is_hg?(board)}" %>
       <% end %>
     </div>
+     <% end %>
 
     <div class="header">
       <a href="/" class="title"><span class="text-primary">D</span>isqb</a>

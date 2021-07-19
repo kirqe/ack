@@ -1,8 +1,15 @@
 @import "base/base";
+
 @import "posts/form";
 @import "posts/show";
 @import "posts/index";
 
+@import "comments/index";
+
+@import "posts/rich-text";
+@import 'quill/dist/quill.core.css';
+@import 'quill/dist/quill.bubble.css';
+@import 'quill/dist/quill.snow.css';
 
 /* app/javascript/stylesheets/application.scss */
 @import "tailwindcss/base";
@@ -10,3 +17,5 @@
 
 /* Add any custom CSS here */
 @import "tailwindcss/utilities";
+
+
