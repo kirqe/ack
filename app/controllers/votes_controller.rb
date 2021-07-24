@@ -1,11 +1,11 @@
 class VotesController < ApplicationController
+  before_action :authenticate_user!
+
   def vote
     @votable.votes.find_by(user: current_user).nil? ? 
       cast_vote : revoke_vote
 
-    respond_to do |format|
-      format.json { render json: { votes: @votable.votes_count } }
-    end      
+    render json: { votes: @votable.votes_count }
   end
 
   private

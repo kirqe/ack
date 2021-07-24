@@ -3,6 +3,6 @@ class Posts::VotesController < VotesController
 
   private
     def set_votable
-      @votable = Post.find(params[:post_id])
+      @votable = Post.friendly.find(params[:post_id])
     end
 end

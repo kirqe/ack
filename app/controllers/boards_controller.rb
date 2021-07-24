@@ -1,6 +1,7 @@
 class BoardsController < ApplicationController
+  before_action :authenticate_user!, only: [:new, :create]
   def index
-    @boards = Board.ordered_by_post_count
+    @boards = Board.approved.ordered_by_post_count
   end
 
   def new
@@ -9,21 +10,13 @@ class BoardsController < ApplicationController
   
   def create
     @board = Board.new(board_params)
-
-    respond_to do |format|
-      if @board.save
-        format.html { redirect_to boards_url, notice: "The board was successfully created. Wait till it's approved" }
-        format.js                
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.js
-        format.json {
-          render json: {
-            formWithErrors: render_to_string("boards/_form", formats: [:html], layout: false, locals: { board: @board })
-          }, status: :unprocessable_entity 
-        }
-      end  
-    end
+    if @board.save        
+      redirect_to boards_url, notice: "The board was successfully created. Wait till it's approved"
+    else        
+      render json: {
+        formWithErrors: render_to_string("boards/_form", formats: [:html], layout: false, locals: { board: @board })
+      }, status: :unprocessable_entity         
+    end      
   end
 
   private

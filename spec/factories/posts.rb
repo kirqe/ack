@@ -6,6 +6,7 @@
 #  body           :text
 #  comments_count :integer          default(0)
 #  name           :string           not null
+#  slug           :string
 #  url            :string
 #  votes_count    :integer          default(0)
 #  created_at     :datetime         not null
@@ -16,6 +17,7 @@
 # Indexes
 #
 #  index_posts_on_board_id  (board_id)
+#  index_posts_on_slug      (slug) UNIQUE
 #  index_posts_on_user_id   (user_id)
 #
 # Foreign Keys

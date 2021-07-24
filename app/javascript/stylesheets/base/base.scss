@@ -1,3 +1,11 @@
+body {
+  @apply h-screen;
+
+  &.night {
+    @apply bg-black;
+  }
+}
+
 .pickr .pcr-button {
   width: 1rem !important;
   height: 1rem !important;
@@ -104,14 +112,44 @@
 }
 
 
-.nav-item {
-  @apply relative
+.nav-item, .nav-item a {
+  @apply flex relative;
 }
 
-.nav-item .dropdown {
-  
+.dropdown-menu {
+  @apply w-36 absolute right-0 top-5  border-gray-200 hidden z-20 bg-white flex-col p-1;
+
 }
 
-.nav-item .dropdown-body {
-  @apply absolute right-0 top-5 w-48 border-2 bg-white z-20 p-1;
+.dropdown-item {
+  @apply flex justify-end;
+
+  &:hover {
+    @apply bg-primary-lightest;
+  }
+}
+
+.disabled,
+input:disabled,
+button:disabled,
+textarea:disabled,
+form:disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+.nav.secondary {
+
+}
+
+.nav.secondary {
+  &.left {
+
+  }
+  &.right {
+    
+  }
+}
+
+.nav.secondary .nav-item {
+
 }

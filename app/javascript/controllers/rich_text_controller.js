@@ -1,28 +1,26 @@
 import { Controller } from "stimulus"
 import { DirectUpload } from "@rails/activestorage"
 
-import Quill from 'quill/dist/quill.js';
+import Quill from 'quill';
+
 import QuillResize from 'quill-resize-module';
 Quill.register('modules/resize', QuillResize);
+
 const Delta = Quill.import('delta');
 
 import Storage from "packs/storage"
 
 import { ImageFormat, Video } from "packs/blots"
 
-Video.blotName = 'simpleVideo'
-Video.tagName = 'video'
-
 Quill.register(ImageFormat, true);
-Quill.register(Video);
-
+Quill.register(Video, true);
 
 export default class extends Controller {
   // textArea is the f.text_area of a form
   // editor should be inside of the wrapperTarget
   static targets = ["editor", "textArea", "wrapper"]
   
-  initialize(){
+  initialize() {
     this.postStorage = new Storage("post")
   }
 
@@ -51,8 +49,7 @@ export default class extends Controller {
       this.quill.root.innerHTML = this.textAreaTarget.value
 
       // disallow pasting images
-      this.quill.clipboard.addMatcher('img', (node, delta) => {    
-                  
+      this.quill.clipboard.addMatcher('img', (node, delta) => {                      
         return new Delta()//.insert({image: node.src});      
       });
 
@@ -102,7 +99,7 @@ export default class extends Controller {
     
     const field = document.createElement("input")
     field.setAttribute("class", "h-upload")
-    // field.setAttribute("type", "hidden")
+    field.setAttribute("type", "hidden")
     field.setAttribute("value", signed_id)
     field.name = "post[files][]"
     this.wrapperTarget.insertAdjacentElement('afterend', field);          
@@ -116,8 +113,7 @@ export default class extends Controller {
     
     input.onchange = () => {
       const file = input.files[0];
-  
-      // Ensure only images are uploaded
+      
       if (/^image\//.test(file.type)) {
         let range = this.quill.getSelection()
         let placeholderText = `[uploading... ${file.name}]`
@@ -137,8 +133,7 @@ export default class extends Controller {
     input.click()
     
     input.onchange = () => {
-      const file = input.files[0];
-      console.log(file)
+      const file = input.files[0];      
       
       if (/^video\//.test(file.type)) {
         let range = this.quill.getSelection()
@@ -157,15 +152,13 @@ export default class extends Controller {
     var upload = new DirectUpload(file, '/rails/active_storage/direct_uploads')
     upload.create((error, blob) => {
       if (error) {
-        console.log(error)
         this.quill.deleteText(placeholderStartIdx, placeholderEndIdx)   
         this.quill.insertText(placeholderStartIdx, `[there was an error uploading ${file.name}]`, "italic", true)
       } else {
         this.quill.deleteText(placeholderStartIdx, placeholderEndIdx)   
         let url = `/rails/active_storage/blobs/${blob.signed_id}/${blob.filename}`
-
-        this.quill.insertEmbed(placeholderStartIdx + 1, 'image', url);        
         this.quill.insertEmbed(placeholderStartIdx, 'block', '<p><br></p>'); 
+        this.quill.insertEmbed(placeholderStartIdx + 1, 'image', url);        
       }
     });
   }
@@ -176,20 +169,13 @@ export default class extends Controller {
     var upload = new DirectUpload(file, '/rails/active_storage/direct_uploads')
     upload.create((error, blob) => {
       if (error) {
-        console.log(error)
         this.quill.deleteText(placeholderStartIdx, placeholderEndIdx)   
         this.quill.insertText(placeholderStartIdx, `[there was an error uploading ${file.name}]`, "italic", true)
       } else {
         this.quill.deleteText(placeholderStartIdx, placeholderEndIdx)   
-        let url = `/rails/active_storage/blobs/${blob.signed_id}/${blob.filename}#t=0.5`
-
-        this.quill.insertEmbed(placeholderStartIdx + 1, 'simpleVideo', {
-          url,
-          controls: 'controls',
-          width: '100%',
-          height: '100%'
-        });        
+        let url = `/rails/active_storage/blobs/${blob.signed_id}/${blob.filename}`
         this.quill.insertEmbed(placeholderStartIdx, 'block', '<p><br></p>'); 
+        this.quill.insertEmbed(placeholderStartIdx + 1, 'video', url);
       }
     });
   }

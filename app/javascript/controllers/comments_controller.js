@@ -12,8 +12,10 @@ export default class extends Controller {
   static values = { url: String }
 
   initialize() {
-    this.isLoading = false
-    this.ogForm = this.formTarget.outerHTML
+    if (this.hasFormTarget) {
+      this.isLoading = false
+      this.ogForm = this.formTarget.outerHTML
+    }
   }
 
   connect() {

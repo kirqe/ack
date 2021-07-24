@@ -1,0 +1,8 @@
+    <% if controller_name == "posts" %>
+      <div id="boards" data-controller="boards-nav" data-boards-nav-target="boards">
+        <% Board.approved.ordered_by_post_count.each do |board| %>
+          <%= link_to board.name, board_path(board.slug), 
+            class: "board #{'current' if is_hg?(board)}" %>
+        <% end %>
+      </div>
+     <% end %>

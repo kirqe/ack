@@ -18,7 +18,7 @@
 class Board < ApplicationRecord
   validates :name,
     presence: true,
-    length: {minimum:3, maximum:50}
+    length: { minimum: 3, maximum: 50 }
 
   validates :slug,
     presence: true,
@@ -26,10 +26,22 @@ class Board < ApplicationRecord
 
   validates :body,
     presence: true,
-    length: {minimum:0, maximum:150}
+    length: { minimum: 0, maximum: 150 }
 
   has_many :posts, dependent: :destroy
 
   scope :ordered_by_post_count, -> { order("posts_count DESC") }
   scope :approved, -> { where.not(approved_at: nil) }
+
+  def approved?
+    !approved_at.nil?
+  end
+
+  def approve!
+    self.update!(approved_at: Time.now)    
+  end
+
+  def reject!
+    self.update!(approved_at: nil)
+  end
 end

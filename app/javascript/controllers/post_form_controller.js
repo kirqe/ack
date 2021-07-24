@@ -1,17 +1,13 @@
 import { Controller } from "stimulus"
 import debounce from 'lodash/debounce'
 import Storage from "packs/storage"
+import Turbolinks from "turbolinks"
 
 export default class extends Controller {
   static targets = ["wrapper", "form", 
                     "name", "url", "body", 
                     "indicator", "characterCount",
                     "submitBtn", "restoreBtn"]
-
-  connect() {
-    console.log("form controller")
-    
-  }
 
   initialize(){
     this.postStorage = new Storage("post")
@@ -23,16 +19,15 @@ export default class extends Controller {
 
   onPostSuccess(e) {
     this.wrapperTarget.classList.add("hidden") 
-    // localStorage.removeItem("latestPost")
     this.postStorage.remove("latestPost")
     let [response, status, xhr] = e.detail
-    console.log(response)
-    window.location = response.url
+    // window.location = response.url
+    Turbolinks.clearCache()
+    Turbolinks.visit(response.url)
   }
 
   onPostError(e) {
     let [response, status, xhr] = e.detail
-    console.log(response)
     this.wrapperTarget.outerHTML = response.formWithErrors
     this.formTarget.classList.remove("hidden") // by default the form is hidden
     this.submitBtnTarget.classList.remove("submitted")
@@ -48,7 +43,7 @@ export default class extends Controller {
       body: this.bodyTarget.value
     }
     this.postStorage.addOrUpdate("latestPost", latestPost)
-    // localStorage.setItem("latestPost", JSON.stringify(latestPost))
+    
     setTimeout(() => {
       this.indicatorTarget.classList.remove("saving")
     }, 1000)

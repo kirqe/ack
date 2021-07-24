@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Disqb</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= render "layouts/theme" %>
+</head>
+
+<body>
+  <div class="container" data-controller="global">
+    <%# render "layouts/inspect" %>
+    <%= render "layouts/nav" %>
+
+    <div class="header">
+      <a href="/" class="title"><span class="text-primary">D</span>isqb</a>
+      <span class="right">
+        <%= render "layouts/actions" %>
+      </span>
+    </div>
+
+    <%= render "layouts/alerts" %>
+
+    <div class="inner panel">      
+      <%= yield %>
+    </div>
+</body>
+
+</html>

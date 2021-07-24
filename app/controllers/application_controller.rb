@@ -1,21 +1,24 @@
 class ApplicationController < ActionController::Base
   include Pagy::Backend
-  helper_method [:current_user, :has_token?]
-  before_action :current_user
-  
-  def current_user
-    @current_user = User.find_by(token: cookies[:token]) if cookies[:token]
-    set_user unless @current_user 
-    @current_user 
-  end
+  # helper_method [:current_user, :has_token?]
+  # before_action :current_user
 
-  def set_user
-    user = User.create(ip: request.remote_ip) #remote_ip
-    cookies.permanent[:token] = user.token
-    user
-  end
+  layout :set_layout
+  before_action :configure_devise_params, if: :devise_controller?
 
-  def token_exists?
-    !current_user.nil?
-  end
+  private
+    def set_layout
+      devise_controller? ? "auth" : "application"
+    end
+
+    def configure_devise_params
+      keys = [
+        :username,
+        :email,
+        :password,
+        :password_confirmation
+      ]
+      devise_parameter_sanitizer.permit(:sign_up, keys: keys)
+      devise_parameter_sanitizer.permit(:account_update, keys: keys)
+    end
 end

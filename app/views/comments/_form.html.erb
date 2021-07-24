@@ -1,3 +1,5 @@
+<% if user_signed_in? %>
+
 <% comment ||= commentable.comments.new %>
 
 <%= form_with(model: [commentable, comment], multipart: true, class: "form", local: false,
@@ -20,11 +22,19 @@
   <%= f.text_area :body, rows: 5, placeholder: "What are your thoughts?", class: "comment-body",
   data: { "uploads-target": "dropzone" } %>
   <%= error_tag(comment, :body, :comment) %>
-  <%= error_tag(comment, :file) %>
 </div>
 
 <div class="attachments" 
 data-uploads-target="attachments"></div>
 
 <%= f.submit "Comment", class: "btn bg-primary" %>
+<% end %>
+
+<% else %>
+  <div class="flex space-x-1 text-gray-600">
+    <%= link_to "Log in", new_user_session_path, class: "text-primary underline" %>
+    <span>or</span>
+    <%= link_to "Sign up", new_user_registration_path, class: "text-primary underline" %>
+    <span>to comment</span>
+  </div>
 <% end %>

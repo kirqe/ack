@@ -1,0 +1,20 @@
+
+<div class="form-wrapper sm:w-96 mx-auto">
+<h1 class="text-2xl mb-3 font-bold text-gray-600">Sign in</h1>
+<%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "form" }) do |f| %>
+  <div class="field">
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Email" %>
+    <%= error_tag(resource, :email) %>
+  </div>
+
+  <div class="field">
+    <%= f.password_field :password, autocomplete: "current-password", placeholder: "Password" %>
+    <%= error_tag(resource, :password) %>    
+  </div>
+
+  <%= f.submit "Sign in", class: "btn bg-primary" %>
+
+<% end %>
+
+<%= render "devise/shared/links" %>
+</div>

@@ -31,4 +31,8 @@ module ApplicationHelper
       }
     ))
   end
+
+  def disabled?
+    { class: "disabled", disabled: true } if user_signed_in?
+  end
 end

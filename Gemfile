@@ -11,11 +11,13 @@ gem 'webpacker', '~> 5.0'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.7'
 
-gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
-
 gem 'active_decorator'
 gem 'sanitize'
 gem 'pagy'
+gem 'friendly_id', '~> 5.4.0'
+gem 'babosa'
+
+gem 'devise'
 
 gem "aws-sdk-s3", require: false
 gem 'active_storage_validations'
@@ -32,6 +34,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rails-controller-testing'
   gem 'factory_bot_rails'
+  gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
 end
 
 group :development do  

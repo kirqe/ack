@@ -17,6 +17,6 @@ module PostDecorator
 
   def byline   
     user.gravatar + 
-    "by #{user.name} #{time_ago_in_words(created_at)} ago"    
+    "by #{user.username} #{time_ago_in_words(created_at)} ago"    
   end
 end

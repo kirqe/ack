@@ -1,6 +1,7 @@
-import Quill from 'quill/dist/quill.js';
+import Quill from 'quill';
+// import { EmbedPlaceholder, PlaceholderRegister } from 'quill-resize-module';
 
-const ImageFormatAttributesList = [
+const FormatAttributesList = [
   'alt',
   'height',
   'width',
@@ -12,7 +13,7 @@ const BaseImageFormat = Quill.import('formats/image');
 
 class ImageFormat extends BaseImageFormat {
   static formats(domNode) {
-    return ImageFormatAttributesList.reduce(function(formats, attribute) {
+    return FormatAttributesList.reduce(function(formats, attribute) {
       if (domNode.hasAttribute(attribute)) {
         formats[attribute] = domNode.getAttribute(attribute);
       }
@@ -20,7 +21,7 @@ class ImageFormat extends BaseImageFormat {
     }, {});
   }
   format(name, value) {
-    if (ImageFormatAttributesList.indexOf(name) > -1) {
+    if (FormatAttributesList.indexOf(name) > -1) {
       if (value) {
         this.domNode.setAttribute(name, value);
       } else {
@@ -32,37 +33,45 @@ class ImageFormat extends BaseImageFormat {
   }
 }
 
-
 // VIDEO
 
 const VideoFormat = Quill.import('blots/block/embed');
 
 class Video extends VideoFormat {
+  static formats(domNode) {
+    return FormatAttributesList.reduce(function(formats, attribute) {
+      if (domNode.hasAttribute(attribute)) {
+        formats[attribute] = domNode.getAttribute(attribute);
+      }
+      return formats;
+    }, {});
+  }
+  
   static create (value) {
     let node = super.create()
-    node.setAttribute('src', value.url)
-    node.setAttribute('controls', value.controls)
-    node.setAttribute('width', value.width)
-    node.setAttribute('height', value.height)
+    node.setAttribute('src', value)
+    node.setAttribute('controls', 'controls')
+    node.setAttribute('width', "100%")
+    node.setAttribute('height', "100%")
     node.setAttribute('webkit-playsinline', true)
     node.setAttribute('playsinline', true)
     node.setAttribute('x5-playsinline', true)
-    // node.setAttribute('preload', 'none')
+    node.setAttribute('preload', 'auto')
+    
     return node;
   }
  
   static value (node) {
     return {
       url: node.getAttribute('src'),
-      controls: node.getAttribute('controls'),
-      width: node.getAttribute('width'),
-      height: node.getAttribute('height')
     };
   }
 
 }
 
-
+Video.blotName = 'video'
+Video.tagName = 'video'
+Video.className = 'ql-video';
 
 export { 
   ImageFormat,

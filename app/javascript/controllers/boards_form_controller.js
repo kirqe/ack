@@ -1,7 +1,7 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static targets = ["form"]
+  static targets = ["form", "wrapper"]
 
   connect() {
     console.log("connected boards")
@@ -9,11 +9,12 @@ export default class extends Controller {
 
   onPostSuccess(e) {
     let [response, status, xhr] = e.detail
-    window.location = "/"
+    Turbolinks.clearCache()
+    Turbolinks.visit("/")
   }
 
   onPostError(e) {
     let [response, status, xhr] = e.detail    
-    this.formTarget.innerHTML = response.formWithErrors
+    this.wrapperTarget.outerHTML = response.formWithErrors
   }
 }

@@ -3,7 +3,8 @@
     <div class="side relative">
       <div class="votes" data-controller="votes">
         <div class="votes-inner">
-          <%= link_to "#", class: "vote-up #{'voted' if current_user.voted_for?(@post)}", 
+
+          <%= link_to "#", class: "vote-up #{'voted' if user_signed_in? && current_user.voted_for?(@post)}", 
             data: {"votes-target": "voteBtn", 
             action: "click->votes#vote", url: vote_post_path(@post)} do %>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 border-2 border-primary-lighter rounded" viewBox="0 0 20 20" fill="currentColor">

@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  before_action :authenticate_user!, only: :create
   def index
     locals = {
       commentable: @commentable 
@@ -47,28 +48,20 @@ class CommentsController < ApplicationController
 
     form_to_render = comment.parent_id.nil? ? "comments/_form" : "comments/_reply_form"
 
-    respond_to do |format|
-      if comment.save
-        format.html
-        format.json {
-          render json: render_to_string("comments/_comment", formats: [:html], layout: false, 
-            locals: { 
-              commentable: @commentable, 
-              comment: comment 
-            })
-        }
-      else
-        format.html
-        format.json {
-          render json: {
-            formWithErrors: render_to_string(form_to_render, formats: [:html], layout: false, 
-              locals: { 
-                commentable: @commentable, 
-                comment: comment
-              })
-            }, status: :unprocessable_entity 
-        }        
-      end
+    if comment.save
+      render json: render_to_string("comments/_comment", formats: [:html], layout: false, 
+        locals: { 
+          commentable: @commentable, 
+          comment: comment 
+        })
+    else
+      render json: {
+        formWithErrors: render_to_string(form_to_render, formats: [:html], layout: false, 
+          locals: { 
+            commentable: @commentable, 
+            comment: comment
+          })
+        }, status: :unprocessable_entity 
     end
   end
 

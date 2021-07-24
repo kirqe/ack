@@ -19,11 +19,13 @@ export default class extends Controller {
   static values = { url: String, expanded: Boolean }
 
   initialize() {
-    this.isLoading = false
-    this.ogForm = this.formTarget.outerHTML
-    this.isFormOpen = false
-    this.isRepliesExpanded = false
-    this.isRepliesLoaded = false
+    if (this.hasFormTarget) {
+      this.isLoading = false
+      this.ogForm = this.formTarget.outerHTML
+      this.isFormOpen = false
+      this.isRepliesExpanded = false
+      this.isRepliesLoaded = false    
+    }
     
   }
 

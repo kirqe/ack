@@ -1,8 +1,9 @@
 class PostsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_post, only: [:show]
   before_action :set_board, only: [:index, :create]
 
-  def index  
+  def index
     @pagy, @posts = pagy(@board.posts.newest_first)
     @post = @board.posts.new
 
@@ -15,38 +16,29 @@ class PostsController < ApplicationController
   end
 
   def show
-    
   end
 
   def create
     @post = @board.posts.new(post_params)
     @post.user = current_user
-    
-    respond_to do |format|
-      if @post.save
-        format.html { redirect_to @post, notice: "Post was successfully created." }
-        format.js      
-        format.json { 
-          render json: render_to_string('posts/_post', layout: false, locals: { post: @post }) } 
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.js
-        format.json { 
-          render json: { 
-            formWithErrors: render_to_string("posts/_form", formats: [:html], layout: false, locals: {post: @post} ) 
-          }, status: :unprocessable_entity 
-        }
-      end
+
+    if @post.save
+      render json: render_to_string('posts/_post', layout: false, locals: { post: @post })       
+    else    
+      render json: { 
+        formWithErrors: render_to_string("posts/_form", formats: [:html], layout: false, locals: {post: @post} ) 
+      }, status: :unprocessable_entity       
     end
   end
 
   private
     def set_post
-      @post = Post.includes(user: :comments).find(params[:id])
+      @post = Post.includes(user: :comments).friendly.find(params[:id])
     end
     
-    def set_board
+    def set_board     
       @board = Board.includes(:posts).find_by(slug: params[:board_id])
+      redirect_to boards_url, notice: "This board is not approved yet." unless @board.approved?
     end
 
     def post_params

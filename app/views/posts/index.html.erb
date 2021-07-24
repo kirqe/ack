@@ -1,17 +1,20 @@
-<div id="index">
-  <%= render partial: "posts/form", locals: { post: @post } %>
+<div id="index" class="relative">
+  <% if user_signed_in? && params[:board_id] != "front" %>
+    <%= render partial: "posts/form", locals: { post: @post } %>
+  <% end %>
+
   <div class="posts" 
     data-controller="infinite-scroll" data-action="scroll@window->infinite-scroll#scroll">
-      <div data-infinite-scroll-target="posts">
-        <% if @posts.any? %>
-          <%= render @posts %>
-        <% else %>
-          <p class="text-primary-lighter text-center">There're no posts here yet</p>
-        <% end %>
-      </div>
+    <div data-infinite-scroll-target="posts">
+      <% if @posts.any? %>
+        <%= render @posts %>
+      <% else %>
+        <p class="text-primary-lighter text-center">There're no posts here yet</p>
+      <% end %>
+    </div>
 
-      <div class="hidden" data-infinite-scroll-target="pagination">
-        <%== pagy_nav(@pagy) %>
-      </div>
+    <div class="hidden" data-infinite-scroll-target="pagination">
+      <%== pagy_nav(@pagy) %>
     </div>
   </div>
+</div>

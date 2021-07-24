@@ -8,7 +8,7 @@ export default class extends Controller {
 
   initialize() {
     this.uploadsLimit = 4
-    this.maxSize = 500000
+    this.maxSize = 400000000
     this.commentStorage = new Storage("comment")
     this.totalSize = 0
     this.uploads = {
@@ -22,7 +22,6 @@ export default class extends Controller {
 
   onDrag(e) {
     e.preventDefault()
-    console.log("drag") 
     this.dropzoneTarget.classList.toggle("dragging")
   }
 
@@ -44,7 +43,7 @@ export default class extends Controller {
     let total = files.reduce((total, item) => total + item.getAsFile().size, 0)
 
     if (total > this.maxSize) {
-      alert("The total size of the uploads can't be over 50MB")
+      alert("The total size of the uploads is to big.")
       return
     }
 
@@ -66,8 +65,6 @@ export default class extends Controller {
 
     upload.create((error, blob) => {
       if (error) {
-        console.log(error)
-
         document.getElementById(`direct-upload-${id}`).remove()
       } else {
         let url = `/rails/active_storage/blobs/${blob.signed_id}/${blob.filename}`
@@ -119,8 +116,6 @@ export default class extends Controller {
     
     e.currentTarget.parentNode.remove();
     this.uploadsLimit += 1     
-    // console.log(entries)
-    // this.commentStorage.addOrUpdate(this.containerIdValue, this.uploads)
     this.toggleAttachments()
   }
 

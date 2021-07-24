@@ -14,4 +14,3 @@ ActiveStorage.start()
 
 import "stylesheets/application" 
 import "controllers"
-

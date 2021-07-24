@@ -1,6 +1,6 @@
 <span class="actions">
   <span class="action">
-    <% if controller_name == "posts" && action_name == "index" %>
+    <% if user_signed_in? && controller_name == "posts" && action_name == "index" %>
     <a href="#" data-global-target="togglePostFormBtn" data-action="click -> global#toggleForm">Add</a>
     <% end %>
   </span>

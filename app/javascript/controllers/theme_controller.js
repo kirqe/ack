@@ -79,7 +79,6 @@ export default class extends Controller {
         --accent-lightest: ${accentLightest}; 
       }`
 
-
       document.getElementById("theme").innerHTML = this.theme
       localStorage.setItem("theme", this.theme)
       localStorage.setItem("accent", accent)
@@ -89,8 +88,7 @@ export default class extends Controller {
   }
 
   teardown() {
-    console.log("td")
-    this.wrapperTarget.innerHTML = "<div data-theme-target=\"picker\"></div>"
+    this.wrapperTarget.innerHTML = `<div data-theme-target=\"picker\"></div>`
   }
 
   _setTheme() {

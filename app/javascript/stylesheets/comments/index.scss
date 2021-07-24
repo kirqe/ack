@@ -4,7 +4,7 @@
 }
 
 .comments-wrapper .comments-stats {
-  @apply text-sm text-gray-400 px-3 p-3 pb-0 h-7 flex;
+  @apply text-sm text-gray-400 px-4 p-3 pb-0 h-7 flex;
 
   .stats-item {
     @apply flex items-center;
@@ -23,10 +23,10 @@
   @apply text-gray-600 mt-6;
 
   .meta {
-    @apply mb-3 text-gray-400 flex items-center text-sm;
+    @apply mb-3 text-gray-400 flex space-x-1 items-center text-sm;
   }
   .body {
-
+    @apply mb-3;
   }
   .footer {
     @apply text-sm text-gray-400;
@@ -34,6 +34,11 @@
   .expand-count {
     @apply bg-primary rounded px-1 text-xs font-bold text-white;
   }
+}
+
+
+.reply-form-wrapper {
+  @apply mt-1;
 }
 
 .comments-wrapper .comments .comment .body,

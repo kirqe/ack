@@ -1,9 +1,8 @@
-<div class="form-wrapper relative">
+<div class="form-wrapper relative panel" data-controller="boards-form" data-boards-form-target="wrapper">
   <%= form_with(model: board, class: "form my-1", local: false, 
   data: {
     type: "json",
     "boards-form-target": "form",
-    "controller": "boards-form",
   action: "
     ajax:success->boards-form#onPostSuccess 
     ajax:error->boards-form#onPostError"
