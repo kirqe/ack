@@ -1,0 +1,36 @@
+  <% fixed ||= false %>
+  
+  <% if user_signed_in? && current_user.has_cached_role?(:admin) %>
+  <span data-controller="manage" class="manage <%= 'fixed-side' if fixed %>">
+    <a href="#" data-action="click->manage#openDialog">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+      </svg>      
+    </a>
+    <div data-manage-target="dialog" class="manage-menu absolute" style="width: 200px">
+      <div class="menu-inner">
+        <%= link_to "#{post.pinned? ? "Unpin" : "Pin"}", pin_post_path(post), class: "menu-item", method: :patch %>        
+ 
+        <% unless post.pinned? || post.locked? %>
+          <a href="#" class="menu-item">Pin and Lock</a>        
+        <% end %>
+
+        <%= link_to "#{post.locked? ? "Unlock" : "Lock"}", lock_post_path(post), class: "menu-item", method: :patch %>        
+
+        <%= link_to "#{post.published? ? "Unpublish" : "Publish"}", publish_post_path(post), class: "menu-item", method: :patch %>        
+
+        <%= link_to "#{post.soft_deleted? ? "Restore post" : "Delete post"}", delete_post_path(post), class: "menu-item", method: :patch %>        
+        <%= link_to "#{post.user.suspended? ? "Resume user" : "Suspend for 1 day"}", suspend_user_path(post.user), class: "menu-item", method: :patch %>        
+
+        <% unless post.user.suspended? %>
+          <%= link_to "Ban", suspend_user_path(post.user, { ban: true }), class: "menu-item", method: :patch %>                 
+        <% end %>
+
+        <% unless post.soft_deleted? %>
+          <%= link_to "Delete and Suspend for 1 day", delete_post_path(post, { suspend: true }), class: "menu-item", method: :patch %>              
+          <%= link_to "Delete and Ban", delete_post_path(post, { ban: true }), class: "menu-item", method: :patch %>
+        <% end %>
+      </div>    
+    </div>    
+  </span>
+  <% end %>

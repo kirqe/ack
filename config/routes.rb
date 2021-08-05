@@ -1,31 +1,68 @@
-Rails.application.routes.draw do  
-  # devise_for :users, path: 'auth', path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirma tion: 'verification', unlock: 'unblock', registration: 'register' }
-  devise_for :users, path: 'auth', path_names: { sign_in: 'signin', sign_out: 'signout', sign_up: 'signup'}
+require 'sidekiq/web'
+Rails.application.routes.draw do   
+  root to: "boards#index"
+  devise_for :users, path: 'auth', 
+  path_names: { sign_in: 'signin', sign_out: 'signout', sign_up: 'signup'},
+  controllers: { registrations: "users/registrations" }
+
+  authenticate :user, lambda { |u| u.has_role?(:admin) } do
+    mount Sidekiq::Web => '/sidekiq'    
+  end
+  
 
   get 'boards/new', to: "boards#new", as: :new_board
 
-  post ":post_id/vote", to: "posts/votes#vote", as: :vote_post
-
-
-
-  post "posts/:post_id/comments", to: "posts/comments#create", as: :post_comments
-  get "posts/:post_id/comments", to: "posts/comments#index", as: :post_commens
-  
-  get "posts/:post_id/comments/:comment_id/replies", to: "comments#replies", as: :comment_replies
-
-
-  resources :boards, path: '' do
-    resources :posts, path: ''
+  resources :posts, path: 'p', only: [:show]
+  resources :boards, path: '', shallow: true do
+    resources :posts, path: '', except: :show
   end
 
+  resources :posts, path: '', only: [] do
+    resources :comments, module: 'posts'
+    resources :votes, only: [:create], module: 'posts'
 
-  resources :posts do
-    resources :comments
+    # @votable cant be set for some reason
+    # member do
+    #   post "vote", to: "votes#create"  
+    # end
   end
   
+  get "f/:filter", to: "boards#index", as: :filtered_boards
+  get ":board_id/:filter", to: "posts#index", as: :filtered_board_posts
+
   resources :comments do
     resources :comments
   end
 
-  root to: "boards#index"
+  scope module: 'admin' do
+    resources :boards, only: [] do
+      member do
+        patch 'approve'
+        patch 'reject'
+        patch 'delete'
+        patch 'reset'
+      end      
+    end
+
+    resources :posts, only: [] do
+      member do
+        patch 'pin'
+        patch 'lock'
+        patch 'publish'
+        patch 'delete'
+      end
+    end
+
+    resources :comments, only: [] do
+      member do
+        patch 'delete'
+      end
+    end
+
+    resources :users, only: [] do
+      member do
+        patch 'suspend'
+      end
+    end
+  end
 end

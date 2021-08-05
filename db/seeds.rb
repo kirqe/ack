@@ -7,6 +7,9 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
+user = User.create(username: "admin", email: "admin@admin.com", password: "password")
+user.add_role(:admin)
+
 Board.create(name: "Random", slug: "rand", body: "Posts with no category", approved_at: Time.now)
 Board.create(name: "News", slug: "news", body: "Anything related to news", approved_at: Time.now)
 Board.create(name: "Music", slug: "music", body: "Music related forum", approved_at: Time.now)

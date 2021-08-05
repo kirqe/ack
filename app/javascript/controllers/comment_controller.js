@@ -26,7 +26,6 @@ export default class extends Controller {
       this.isRepliesExpanded = false
       this.isRepliesLoaded = false    
     }
-    
   }
 
   connect() {
@@ -78,20 +77,28 @@ export default class extends Controller {
     this.formTarget.outerHTML = this.ogForm
     this.repliesTarget.insertAdjacentHTML('beforeend', response)
     this.toggleForm(e)
-    console.log(this.formTarget.uploadsContainerIdValue)
+    this.expandReplies(e)
+    // console.log(this.formTarget.uploadsContainerIdValue)
     this.commentStorage.remove(this.formTarget.dataset.uploadsContainerIdValue)
   }
 
   onPostError(e) {
     let [response, status, xhr] = e.detail
-    this.formTarget.outerHTML = response.formWithErrors
+    if (xhr.status == 403) {
+      dispatchEvent(new CustomEvent("notice", {
+        detail: {
+          message: response.notice
+        }
+      }))
+    } else {
+      this.formTarget.outerHTML = response.formWithErrors
+    }
   }
 
   _loadReplies() {
     if (!this.isRepliesLoaded) {
       this.isLoading = true
       this.loaderTarget.classList.remove("hidden")    
-
     
       Rails.ajax({
         type: "GET",
@@ -101,7 +108,6 @@ export default class extends Controller {
           this.isRepliesLoaded = true
           this.isLoading = false        
           this.loaderTarget.classList.add("hidden")
-  
           this.repliesTarget.innerHTML = data.replies
         }
       })

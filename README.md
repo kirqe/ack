@@ -1,1 +1,17 @@
-# disqb v2
+# ACK!
+
+Just a mini forum
+
+![](ack.png)
+
+## Notes 
+
+Set s3 credentials to upload files.
+Check the seeds file.
+
+```
+rake db:create db:migrate db:seed
+redis-server
+bundle exec sidekiq
+rails s
+```

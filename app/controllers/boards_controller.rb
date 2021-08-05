@@ -1,17 +1,25 @@
 class BoardsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
-  def index
-    @boards = Board.approved.ordered_by_post_count
-  end
 
+  def index
+    @boards = policy_scope(Board.ordered_by_post_count)
+
+    @boards = @boards.approved     if params[:filter] == "approved" || params[:filter].nil?
+    @boards = @boards.pending      if params[:filter] == "pending"
+    @boards = @boards.rejected     if params[:filter] == "rejected"
+    @boards = @boards.soft_deleted if params[:filter] == "deleted"
+  end
+  
   def new
     @board = Board.new
+    authorize @board
   end
   
   def create
-    @board = Board.new(board_params)
+    @board = authorize(Board.new(board_params))
+
     if @board.save        
-      redirect_to boards_url, notice: "The board was successfully created. Wait till it's approved"
+      redirect_to boards_url, notice: "The board was successfully created. Wait till it's approved."
     else        
       render json: {
         formWithErrors: render_to_string("boards/_form", formats: [:html], layout: false, locals: { board: @board })

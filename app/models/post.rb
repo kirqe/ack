@@ -5,7 +5,11 @@
 #  id             :bigint           not null, primary key
 #  body           :text
 #  comments_count :integer          default(0)
+#  deleted_at     :datetime
+#  locked_at      :datetime
 #  name           :string           not null
+#  pinned_at      :datetime
+#  published_at   :datetime
 #  slug           :string
 #  url            :string
 #  votes_count    :integer          default(0)
@@ -26,10 +30,18 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Post < ApplicationRecord
+  include Pinnable
+  include Lockable
+  include SoftDeletable
+  include Publishable
+
   before_save :strip_link
+  after_create :publish!
 
   extend FriendlyId
   friendly_id :name, use: :slugged
+
+  LOCK_AFTER = 7.days # after the latest comment/vote have been cast
 
   validates :name, 
     presence: true,
@@ -65,18 +77,23 @@ class Post < ApplicationRecord
 
   scope :newest_first, -> { order("created_at DESC") }
   scope :top_rated, -> { order("votes_count DESC") }
-  scope :active, -> { order("updated_at DESC") }
-  scope :newest_and_top_rated, -> { top_rated.newest_first }
+  scope :recently_active, -> { order("updated_at DESC") }
+  scope :newest_and_top_rated, -> { top_rated.newest_first }  
+  
+  scope :user_scope, -> { published.pinned_first.newest_first }
+  scope :admin_scope, -> { pinned_first.newest_first }
 
-  def strip_link
-    self.url.strip!
-  end
-
+  # friendly_id
   def normalize_friendly_id(text)
     text.to_slug.transliterate.normalize.to_s
   end
   
   def should_generate_new_friendly_id?
     name_changed?
-  end    
+  end
+
+  # callbacks
+  def strip_link
+    self.url.strip!
+  end
 end

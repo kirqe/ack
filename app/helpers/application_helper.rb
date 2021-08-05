@@ -32,7 +32,7 @@ module ApplicationHelper
     ))
   end
 
-  def disabled?
-    { class: "disabled", disabled: true } if user_signed_in?
-  end
+  def is_hg?(board) 
+    params[:board_id] == board.slug
+  end  
 end

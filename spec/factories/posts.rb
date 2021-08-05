@@ -5,7 +5,11 @@
 #  id             :bigint           not null, primary key
 #  body           :text
 #  comments_count :integer          default(0)
+#  deleted_at     :datetime
+#  locked_at      :datetime
 #  name           :string           not null
+#  pinned_at      :datetime
+#  published_at   :datetime
 #  slug           :string
 #  url            :string
 #  votes_count    :integer          default(0)

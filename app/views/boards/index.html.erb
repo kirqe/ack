@@ -1,14 +1,27 @@
-<div class="boards">
+<div class="boards relative">
+  <% if user_signed_in? && current_user.has_role?(:admin) %>
+    <div class="filters text-xs text-primary-light flex justify-end absolute -top-5 right-0">
+      <ul class="flex space-x-1">
+        <li><%= link_to "Approved", filtered_boards_path(filter: :approved) %></li>
+        <li><%= link_to "Pending", filtered_boards_path(filter: :pending) %></li>
+        <li><%= link_to "Rejected", filtered_boards_path(filter: :rejected) %></li>
+        <li><%= link_to "Deleted", filtered_boards_path(filter: :deleted) %></li>   
+      </ul>
+    </div>
+  <% end %>
+  
   <% @boards.each do |board| %>
-    <div class="bg-primary-lightest p-4 mb-1 rounded-md flex justify-between items-center">
+    <div class="bg-primary-lightest p-4 mb-1 rounded-md flex justify-between items-center relative">
+      <%= render partial: "shared/manage_board", locals: { board: board } %>
+
       <div class="body">
-        <%= link_to board.name, board_path(board.slug), class: "font-bold text-gray-600" %>
+        <%= link_to board.name, board_posts_path(board.slug), class: "font-bold text-gray-600" %>
         <p class="text-gray-400"><%= board.body %></p>
       </div>
       <div class="font-bold text-lg text-gray-400"><%= board.posts_count %></div>
     </div>
   <% end %>
-  <p class="text-primary-lighter text-center my-6">
+  <p class="text-primary-lighter text-center py-6">
     <%= link_to "Suggest a board", new_board_path, class: "underline" %>
   </p>
 </div>

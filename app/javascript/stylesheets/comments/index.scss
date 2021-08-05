@@ -1,6 +1,6 @@
 
 .comments-wrapper {
-  @apply bg-primary-lightest rounded-md pb-6;
+  @apply bg-primary-lightest rounded-md pb-3;
 }
 
 .comments-wrapper .comments-stats {
@@ -37,6 +37,7 @@
 }
 
 
+
 .reply-form-wrapper {
   @apply mt-1;
 }
@@ -71,6 +72,16 @@
     @apply flex-1;
   }
 }
+
+#show.locked {
+  .comment .body {
+    @apply mb-1;
+  }
+  .comments .replies-wrapper {
+    // apply pt-1;
+  }
+}
+
 
 
 .attachments.has-attachments {

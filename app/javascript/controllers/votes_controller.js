@@ -3,10 +3,6 @@ import Rails from "@rails/ujs"
 
 export default class extends Controller {
   static targets = ["score", "voteBtn"]
-
-  connect() {
-    console.log("connected post")    
-  }
   
   vote(e) {
     e.preventDefault()

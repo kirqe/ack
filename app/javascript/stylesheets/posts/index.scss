@@ -11,7 +11,7 @@
   @apply bg-primary-lightest rounded-md mb-1;
 
   &.pinned {
-    @apply bg-gray-100;
+    @apply border-2 border-primary-light;
   }
 }
 
@@ -26,6 +26,11 @@
   .votes-inner {
     @apply flex flex-col items-center;  
   }
+}
+
+
+#index .posts .post.locked .side {
+  @apply items-center;
 }
 
 #index .posts .post .details {

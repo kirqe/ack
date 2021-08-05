@@ -1,17 +1,18 @@
-<div class="comment" 
+<div class="comment relative" 
   data-controller="comment" 
-  data-comment-url-value="<%= comment_replies_path(commentable, comment) %>"
+  data-comment-url-value="<%= comment_comments_path(comment) %>"
   data-comment-expanded-value="<%= comment.depth < Comment::DEPTH || comment.replies.empty?  %>">
 
   <div class="meta">
     <%= comment.byline %>
+    <%= render partial: "shared/manage_comment", locals: { comment: comment } %>
   </div>
 
   <div class="body">
     <%= comment.sanitaized %>
   </div>
 
-  <% if comment.files.any? %>
+  <% if comment.files.any? && !comment.soft_deleted? && !comment.user.soft_deleted? %>
     <div class="attachments flex flex-col space-y-3 my-1" >
       <div class="flex space-x-3 overflow-y-scroll ns">
         <% comment.files.select(&:image?).each do |file| %>
@@ -40,26 +41,31 @@
   <% end %>
 
   <div class="footer">
-    <a href="#" class="" 
-      data-comment-target="toggleFormBtn"       
-      data-action="click->comment#toggleForm">reply</a>
+    <% unless commentable.locked? %>
+      <a href="#" class="" 
+        data-comment-target="toggleFormBtn"       
+        data-action="click->comment#toggleForm">reply</a>
+    <% end %>
 
     <a class="expand-count" href="#" class=""   
       data-comment-target="expandRepliesBtn" 
       data-action="click->comment#expandReplies">expand</a>
   </div>
 
-  <div class="reply-form-wrapper hidden" data-comment-target="formWrapper">
-    <%= render "comments/reply_form", commentable: commentable, parent: comment %>
-  </div>
+  <% unless commentable.locked? %>
+    <div class="reply-form-wrapper hidden" data-comment-target="formWrapper">
+      <%= render "comments/reply_form", commentable: commentable, parent: comment %>
+    </div>
+  <% end %>
 
-  <svg data-comment-target="loader " class="animate-spin mx-auto my-3 my-3 h-5 w-5 text-primary hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+  <svg data-comment-target="loader " class="animate-spin mx-auto my-3 h-5 w-5 text-primary hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
   </svg>    
 
   <div class="replies-wrapper" data-comment-target="repliesWrapper">
     <a class="toggler" data-action="click->comment#collapseReplies"></a>
+    
     <div class="replies" data-comment-target="replies">
       <% comment.replies.each do |reply| %>      
         <% if reply.depth <= Comment::DEPTH %>

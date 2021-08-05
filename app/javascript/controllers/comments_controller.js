@@ -26,15 +26,23 @@ export default class extends Controller {
   onPostSuccess(e) {
     let [response, status, xhr] = e.detail
     this.formTarget.outerHTML = this.ogForm
-
     this.commentsTarget.insertAdjacentHTML('afterbegin', response)
     this.commentStorage.reload()
-    this.commentStorage.remove(this.formTarget.dataset.uploadsContainerIdValue)
+    this.commentStorage.remove(this.formTarget.dataset.uploadsContainerIdValue)    
   }
 
   onPostError(e) {
     let [response, status, xhr] = e.detail
-    this.formTarget.outerHTML = response.formWithErrors
+
+    if (xhr.status == 403) {
+      dispatchEvent(new CustomEvent("notice", {
+        detail: {
+          message: response.notice
+        }
+      }))
+    } else {
+      this.formTarget.outerHTML = response.formWithErrors
+    }
   }
 
   _loadComments() {

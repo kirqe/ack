@@ -5,6 +5,7 @@
 #  id               :bigint           not null, primary key
 #  body             :text             not null
 #  commentable_type :string           not null
+#  deleted_at       :datetime
 #  depth            :integer          default(1), not null
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
@@ -23,8 +24,10 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Comment < ApplicationRecord
+  include SoftDeletable
   belongs_to :user
   before_save :set_depth
+  after_create :bump_or_lock_commentable
 
   has_many_attached :files
 
@@ -47,12 +50,24 @@ class Comment < ApplicationRecord
 
   # collapse comments at this depth
   DEPTH = 2
-  
+
   scope :root_comments, -> { where(parent: nil, depth: 1) }
   scope :replies_of, -> (comment) { where(parent: comment) }
+
+  def body
+    self.soft_deleted? ? "[this comment was deleted]" : read_attribute(:body)
+  end
 
   private
     def set_depth
       self.depth = (parent.depth + 1) if parent
+    end
+
+    def bump_or_lock_commentable
+      if self.updated_at < Post::LOCK_AFTER.ago
+        self.commentable.lock!
+      else
+        self.commentable.touch
+      end      
     end
 end

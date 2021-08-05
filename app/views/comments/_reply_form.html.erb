@@ -23,7 +23,6 @@
   <%= f.text_area :body, rows: 5, placeholder: "Reply to #{comment.parent.user.username}", class: "comment-body", 
     data: { "uploads-target": "dropzone" } %>
   <%= error_tag(comment, :body, :comment) %>
-  <%= error_tag(comment, :file) %>
 </div>  
 
 <div class="attachments" 

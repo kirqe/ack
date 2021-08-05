@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_23_131232) do
+ActiveRecord::Schema.define(version: 2021_07_24_154116) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,9 +48,11 @@ ActiveRecord::Schema.define(version: 2021_07_23_131232) do
     t.string "slug", null: false
     t.text "body"
     t.datetime "approved_at"
+    t.datetime "rejected_at"
+    t.datetime "deleted_at"
+    t.integer "posts_count", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "posts_count", default: 0
     t.index ["slug"], name: "index_boards_on_slug", unique: true
   end
 
@@ -61,6 +63,7 @@ ActiveRecord::Schema.define(version: 2021_07_23_131232) do
     t.bigint "parent_id"
     t.string "commentable_type", null: false
     t.bigint "commentable_id", null: false
+    t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
@@ -72,22 +75,36 @@ ActiveRecord::Schema.define(version: 2021_07_23_131232) do
     t.string "name", null: false
     t.string "url"
     t.text "body"
+    t.string "slug"
+    t.datetime "published_at"
+    t.datetime "deleted_at"
+    t.datetime "pinned_at"
+    t.datetime "locked_at"
+    t.integer "comments_count", default: 0
+    t.integer "votes_count", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false
     t.bigint "board_id", null: false
-    t.integer "votes_count", default: 0
-    t.integer "comments_count", default: 0
-    t.string "slug"
     t.index ["board_id"], name: "index_posts_on_board_id"
     t.index ["slug"], name: "index_posts_on_slug", unique: true
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string "username"
+  create_table "roles", force: :cascade do |t|
+    t.string "name"
+    t.string "resource_type"
+    t.bigint "resource_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
+    t.index ["resource_type", "resource_id"], name: "index_roles_on_resource"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "username", default: "", null: false
+    t.datetime "deleted_at"
+    t.datetime "suspended_till"
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -100,6 +117,15 @@ ActiveRecord::Schema.define(version: 2021_07_23_131232) do
     t.string "last_sign_in_ip"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["username"], name: "index_users_on_username", unique: true
+  end
+
+  create_table "users_roles", id: false, force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "role_id"
+    t.index ["role_id"], name: "index_users_roles_on_role_id"
+    t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
+    t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
   create_table "votes", force: :cascade do |t|

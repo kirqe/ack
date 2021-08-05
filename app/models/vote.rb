@@ -20,6 +20,17 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Vote < ApplicationRecord
+  after_create :bump_or_lock_votable
+
   belongs_to :user
   belongs_to :votable, polymorphic: true, counter_cache: :votes_count
+
+  private
+  def bump_or_lock_votable
+    if self.updated_at < Post::LOCK_AFTER.ago
+      self.votable.lock!
+    else
+      self.votable.touch
+    end      
+  end
 end

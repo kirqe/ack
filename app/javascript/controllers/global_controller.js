@@ -1,9 +1,7 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static targets = ["postFormWrapper", "togglePostFormBtn"]
-  // postForm
-  // boardForm
+  static targets = ["postFormWrapper", "togglePostFormBtn", "boardsNavWrapper"]
 
   connect() {
     if (this.hasPostFormWrapperTarget) {
@@ -12,6 +10,17 @@ export default class extends Controller {
         this.togglePostFormBtnTarget.text = "Close Form"
       } else {
         this.postFormWrapperTarget.classList.add("hidden")
+      }
+    }
+
+    if (this.boardsNavWrapperTarget) {
+      let status = localStorage.getItem("isBoardsNavHidden")
+      if (status != null) {
+        if (localStorage.getItem("isBoardsNavHidden") == "false") {
+          this.boardsNavWrapperTarget.classList.remove("hidden")
+        } else {
+          this.boardsNavWrapperTarget.classList.add("hidden")
+        }
       }
     }
   }
@@ -29,7 +38,13 @@ export default class extends Controller {
       (this.postFormWrapperTarget.classList.contains("hidden")) ? "Add" : "Close Form"
   }
 
-  toggleSettings(e) {
+  toggleBoardsNav(e) {
     e.preventDefault()
+    if (this.boardsNavWrapperTarget.classList.contains("hidden")) {
+      localStorage.setItem("isBoardsNavHidden", "false")
+    } else {
+      localStorage.setItem("isBoardsNavHidden", "true")
+    }
+    this.boardsNavWrapperTarget.classList.toggle("hidden")
   }
 }

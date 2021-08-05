@@ -28,9 +28,20 @@ export default class extends Controller {
 
   onPostError(e) {
     let [response, status, xhr] = e.detail
-    this.wrapperTarget.outerHTML = response.formWithErrors
-    this.formTarget.classList.remove("hidden") // by default the form is hidden
-    this.submitBtnTarget.classList.remove("submitted")
+
+
+    if (xhr.status == 403) {
+      dispatchEvent(new CustomEvent("notice", {
+        detail: {
+          message: response.notice
+        }
+      }))
+    } else {
+      this.wrapperTarget.outerHTML = response.formWithErrors
+      this.formTarget.classList.remove("hidden") // by default the form is hidden
+      this.submitBtnTarget.classList.remove("submitted")
+    }
+
   }
 
   // save current post to the localStorage

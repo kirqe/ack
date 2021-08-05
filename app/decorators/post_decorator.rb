@@ -3,7 +3,7 @@
 module PostDecorator
   def title
     url.empty? ? 
-    (link_to name, board_post_path(board.slug, self)) : 
+    (link_to name, post_path(self)) : 
     (link_to name, url, target: "_blank")
   end
 

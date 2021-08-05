@@ -31,3 +31,19 @@
 
 en:
   hello: "Hello world"
+
+  activerecord: 
+    exceptions:
+      not_found: "This record is either deleted or you don't have access to it."
+      
+  pundit:
+    default: "You are not authorized to perform this action." 
+    board_policy:      
+    post_policy:
+      show?: "This post is either deleted or you don't have enough rights to access to it."
+    comment_policy:
+      create?: "This post is either locked, you don't have enough rights to comment on it or you were banned."
+    vote_policy:
+      vote?: "The item you're voting on is ether locked or you don't have enough rights to vote on it."
+    board_policy:
+      show?: "This board is either deleted or you don't have access to it."

@@ -3,9 +3,6 @@ import Rails from "@rails/ujs"
 export default class extends Controller {
   static targets = ["pagination", "posts"]
 
-  connect() {
-     console.log(window.document.body)
-  }
   initialize() {
     this.loading = false;
   }

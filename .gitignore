@@ -40,3 +40,5 @@ yarn-debug.log*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 coverage
+
+dump.rdb

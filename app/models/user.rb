@@ -5,6 +5,7 @@
 #  id                     :bigint           not null, primary key
 #  current_sign_in_at     :datetime
 #  current_sign_in_ip     :string
+#  deleted_at             :datetime
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  last_sign_in_at        :datetime
@@ -13,20 +14,25 @@
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
 #  sign_in_count          :integer          default(0), not null
-#  username               :string
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
+#  suspended_till         :datetime
+#  username               :string           default(""), not null
 #
 # Indexes
 #
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
+#  index_users_on_username              (username) UNIQUE
 #
 class User < ApplicationRecord
+  include SoftDeletable
+  include Suspendable
+  rolify
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :trackable 
+
+  after_create :assign_default_role
 
   validates :username,
     presence: true,
@@ -39,5 +45,17 @@ class User < ApplicationRecord
 
   def voted_for?(votable)
     !votable.votes.find_by(user_id: self).nil?
+  end
+
+  def assign_default_role
+    self.add_role(:member) if self.roles.blank?
+  end
+  
+  def username
+    self.soft_deleted? ? "[deleted user]" : read_attribute(:username)
+  end
+
+  def active_for_authentication?
+    super && !self.soft_deleted?
   end
 end

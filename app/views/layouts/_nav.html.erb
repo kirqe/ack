@@ -8,10 +8,12 @@
     </a>
 
     <ul class="dropdown-menu" data-dropdown-target="menu">          
+      <li class="dropdown-item"><%= link_to "Toggle boards nav", "#", data: { action: "click->global#toggleBoardsNav"} %></li>
       <li class="dropdown-item"><%= link_to "Account", edit_user_registration_path, method: :get %></li>
       <li class="dropdown-item"><%= link_to "Sign out", destroy_user_session_path, method: :delete %></li>
     </ul>
   </li>     
+  
   <% else %>
     <li  class="nav-item"><%= link_to "Sign in", new_user_session_path %></li>
   <% end %>

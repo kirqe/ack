@@ -37,5 +37,8 @@ module Disqb
     # config.autoloader = :classic
 
     # config.active_storage.routes_prefix = '/s'
+    # config.autoload_paths += %W(#{config.root}/lib)
+    config.eager_load_paths << Rails.root.join('lib')
+    config.active_job.queue_adapter = :sidekiq
   end
 end

@@ -1,7 +1,21 @@
+<% content_for(:page_title) { @board.name } %>
+
 <div id="index" class="relative">
-  <% if user_signed_in? && params[:board_id] != "front" %>
+  <% if user_signed_in? %>
     <%= render partial: "posts/form", locals: { post: @post } %>
   <% end %>
+
+  <div class="filters text-xs text-primary-light flex justify-end absolute -top-5 right-0">
+    <ul class="flex space-x-1">
+      <li><%= link_to "All", board_posts_path(@board.slug) %></li>      
+      <li><%= link_to "Locked", filtered_board_posts_path(@board.slug, filter: :locked) %></li>
+
+      <% if user_signed_in? && current_user.has_role?(:admin) %>
+        <li><%= link_to "Hidden", filtered_board_posts_path(@board.slug, filter: :hidden) %></li>
+        <li><%= link_to "Deleted", filtered_board_posts_path(@board.slug, filter: :deleted) %></li>   
+      <% end %>
+    </ul>
+  </div>
 
   <div class="posts" 
     data-controller="infinite-scroll" data-action="scroll@window->infinite-scroll#scroll">

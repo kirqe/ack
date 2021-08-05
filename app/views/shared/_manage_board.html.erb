@@ -1,0 +1,23 @@
+
+  <% if user_signed_in? && current_user.has_cached_role?(:admin) %>
+  <span data-controller="manage" class="manage fixed-side">
+    <a href="#" data-action="click->manage#openDialog">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+      </svg>      
+    </a>
+    <div data-manage-target="dialog" class="manage-menu" style="width: 150px">
+      <div class="menu-inner">
+        <% unless board.approved? %>
+          <%= link_to "Approve", approve_board_path(board), class: "menu-item", method: :patch %>
+        <% end %>
+
+        <% unless board.rejected? %>
+        <%= link_to "Reject", reject_board_path(board), class: "menu-item", method: :patch %>
+        <% end %>
+
+        <%= link_to "#{board.soft_deleted? ? "Restore" : "Delete"}", delete_board_path(board), class: "menu-item", method: :patch %>
+      </div>    
+    </div>    
+  </span>
+  <% end %>

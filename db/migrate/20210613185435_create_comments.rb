@@ -6,6 +6,8 @@ class CreateComments < ActiveRecord::Migration[6.1]
       t.integer :depth, null: false, default: 1
       t.references :parent, index: true
       t.references :commentable, polymorphic: true, null: false
+      
+      t.datetime :deleted_at
 
       t.timestamps
     end

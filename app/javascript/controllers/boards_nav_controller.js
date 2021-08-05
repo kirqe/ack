@@ -12,7 +12,7 @@ export default class extends Controller {
         this.boardsTarget.scrollTo((container.left + rect.width), 0)
       } 
       if (rect.x + 10 > container.right) { 
-        console.log(container)
+        // console.log(container)
         this.boardsTarget.scrollTo((rect.x + rect.width), 0)    
       }
     }
