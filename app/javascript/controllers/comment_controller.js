@@ -20,7 +20,6 @@ export default class extends Controller {
       this.ogForm = this.formTarget.outerHTML
       this.isFormOpen = false
       this.isRepliesExpanded = false
-      this.isRepliesLoaded = false    
     }
   }
 
