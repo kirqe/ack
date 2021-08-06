@@ -14,6 +14,13 @@ export default class extends Controller {
       success: (data) => {        
         this.voteBtnTarget.classList.toggle("voted")
         this.scoreTarget.innerText = data.votes
+      },
+      error: (data) => {      
+        dispatchEvent(new CustomEvent('notice', {
+          detail: {
+            message: data.error
+          }
+        }))  
       }
     })
   }

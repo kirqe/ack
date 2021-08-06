@@ -3,6 +3,6 @@ class Posts::CommentsController < CommentsController
   
   private
     def set_commentable
-      @commentable = Post.friendly.find(params[:post_id])
+      @commentable = Post.includes(:comments).friendly.find(params[:post_id])
     end
 end

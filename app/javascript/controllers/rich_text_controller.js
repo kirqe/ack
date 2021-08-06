@@ -152,8 +152,12 @@ export default class extends Controller {
     var upload = new DirectUpload(file, '/rails/active_storage/direct_uploads')
     upload.create((error, blob) => {
       if (error) {
-        this.quill.deleteText(placeholderStartIdx, placeholderEndIdx)   
-        this.quill.insertText(placeholderStartIdx, `[there was an error uploading ${file.name}]`, "italic", true)
+        this.quill.deleteText(placeholderStartIdx, placeholderEndIdx)
+        dispatchEvent(new CustomEvent('notice', {
+          detail: {
+            message: `There was an error uploading ${file.name}. Perhaps the file is too big.`
+          }
+        }))        
       } else {
         this.quill.deleteText(placeholderStartIdx, placeholderEndIdx)   
         let url = `/rails/active_storage/blobs/${blob.signed_id}/${blob.filename}`
@@ -163,14 +167,17 @@ export default class extends Controller {
     });
   }
 
-
   uploadVideo(placeholderStartIdx, placeholderEndIdx, file) {
     // var range = this.quill.getSelection();
     var upload = new DirectUpload(file, '/rails/active_storage/direct_uploads')
     upload.create((error, blob) => {
       if (error) {
-        this.quill.deleteText(placeholderStartIdx, placeholderEndIdx)   
-        this.quill.insertText(placeholderStartIdx, `[there was an error uploading ${file.name}]`, "italic", true)
+        this.quill.deleteText(placeholderStartIdx, placeholderEndIdx)           
+        dispatchEvent(new CustomEvent('notice', {
+          detail: {
+            message: `There was an error uploading ${file.name}. Perhaps the file is too big.`
+          }
+        }))        
       } else {
         this.quill.deleteText(placeholderStartIdx, placeholderEndIdx)   
         let url = `/rails/active_storage/blobs/${blob.signed_id}/${blob.filename}`

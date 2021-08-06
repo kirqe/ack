@@ -7,7 +7,7 @@ class Admin::CommentPolicy < Admin::AdminPolicy
   end
 
   def delete?
-    user.has_role?(:admin) && !comment.user.has_role?(:admin)
+    user.has_role?(:admin) && !comment.user.has_role?(:admin) || comment.user == user
   end
 
   class Scope

@@ -1,10 +1,10 @@
 <div class="comment relative" 
   data-controller="comment" 
-  data-comment-url-value="<%= comment_comments_path(comment) %>"
-  data-comment-expanded-value="<%= comment.depth < Comment::DEPTH || comment.replies.empty?  %>">
+  data-comment-expanded-value="true">
 
   <div class="meta">
     <%= comment.byline %>
+    <%= comment.depth %>
     <%= render partial: "shared/manage_comment", locals: { comment: comment } %>
   </div>
 
@@ -12,14 +12,16 @@
     <%= comment.sanitaized %>
   </div>
 
-  <% if comment.files.any? && !comment.soft_deleted? && !comment.user.soft_deleted? %>
+  <% if comment.files.any? && !comment.soft_deleted? && !comment.user.soft_deleted? %>    
     <div class="attachments flex flex-col space-y-3 my-1" >
       <div class="flex space-x-3 overflow-y-scroll ns">
         <% comment.files.select(&:image?).each do |file| %>
-          <% if file.representable? %>          
-            <%= image_tag file, class: "object-scale-down h-24" %>
+          <% if file.representable? %>
+            <%= link_to rails_blob_path(file, disposition: "inline"), target: "_blank" do %>       
+              <%= image_tag file, class: "object-scale-down h-24" %>
+            <% end %>
           <% else %>
-            <%= link_to rails_blob_path(file, disposition: "attachment"), class: "flex items-center" do %>
+            <%= link_to rails_blob_path(file, disposition: "attachment"), target: "_blank", class: "flex items-center" do %>
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
               </svg> <%= file.blob.filename %>
@@ -30,7 +32,7 @@
 
       <div class="flex flex-col space-y-1">
       <% comment.files.select{|f| !f.image? }.each do |file| %>          
-        <%= link_to rails_blob_path(file, disposition: "attachment"), class: "flex items-center" do %>
+        <%= link_to rails_blob_path(file, disposition: "attachment"), target: "_blank", class: "flex items-center" do %>
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
           </svg> <%= file.blob.filename %>
@@ -41,7 +43,7 @@
   <% end %>
 
   <div class="footer">
-    <% unless commentable.locked? %>
+    <% unless comment.commentable.locked? %>
       <a href="#" class="" 
         data-comment-target="toggleFormBtn"       
         data-action="click->comment#toggleForm">reply</a>
@@ -52,9 +54,9 @@
       data-action="click->comment#expandReplies">expand</a>
   </div>
 
-  <% unless commentable.locked? %>
+  <% unless comment.commentable.locked? %>
     <div class="reply-form-wrapper hidden" data-comment-target="formWrapper">
-      <%= render "comments/reply_form", commentable: commentable, parent: comment %>
+      <%= render "comments/reply_form", commentable: comment.commentable, parent: comment %>
     </div>
   <% end %>
 
@@ -67,11 +69,7 @@
     <a class="toggler" data-action="click->comment#collapseReplies"></a>
     
     <div class="replies" data-comment-target="replies">
-      <% comment.replies.each do |reply| %>      
-        <% if reply.depth <= Comment::DEPTH %>
-          <%= render "comments/comment", comment: reply, commentable: commentable %>
-        <% end %>
-      <% end %>
+      <%= render partial: "comments/comment", collection: comment.replies %>
     </div>
   </div>
 </div>

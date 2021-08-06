@@ -1,26 +1,22 @@
 import { Controller } from "stimulus"
-import Rails from "@rails/ujs"
-import { DirectUpload } from "@rails/activestorage"
 import Storage from "packs/storage"
+
 export default class extends Controller {
   static targets = [
     "form",
     "replies",
     "loader",
     "formWrapper",
-    // "textArea",
     "repliesWrapper",
     "toggleFormBtn",
     "expandRepliesBtn",
-    "collapseRepliesBtn",
-    // "attachments"
+    "collapseRepliesBtn",    
   ]
 
-  static values = { url: String, expanded: Boolean }
+  static values = { expanded: Boolean }
 
   initialize() {
     if (this.hasFormTarget) {
-      this.isLoading = false
       this.ogForm = this.formTarget.outerHTML
       this.isFormOpen = false
       this.isRepliesExpanded = false
@@ -29,7 +25,6 @@ export default class extends Controller {
   }
 
   connect() {
-    //this._loadReplies()    
     this.commentStorage = new Storage("comment")
     if (this.expandedValue) {
       this.repliesWrapperTarget.classList.remove("hidden")
@@ -66,7 +61,6 @@ export default class extends Controller {
 
   expandReplies(e) {
     e.preventDefault()
-    this._loadReplies()
     this.repliesWrapperTarget.classList.remove("hidden")
     this.expandRepliesBtnTarget.classList.add("hidden")
     this.isRepliesExpanded = true
@@ -93,24 +87,5 @@ export default class extends Controller {
     } else {
       this.formTarget.outerHTML = response.formWithErrors
     }
-  }
-
-  _loadReplies() {
-    if (!this.isRepliesLoaded) {
-      this.isLoading = true
-      this.loaderTarget.classList.remove("hidden")    
-    
-      Rails.ajax({
-        type: "GET",
-        url: this.urlValue,
-        dataType: 'json',
-        success: (data) => {
-          this.isRepliesLoaded = true
-          this.isLoading = false        
-          this.loaderTarget.classList.add("hidden")
-          this.repliesTarget.innerHTML = data.replies
-        }
-      })
-    }    
   }
 }

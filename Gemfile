@@ -28,9 +28,6 @@ gem 'active_storage_validations'
 gem "rolify"
 gem "pundit"
 
-gem "sidekiq-scheduler"
-
-
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 

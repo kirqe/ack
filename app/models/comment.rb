@@ -43,13 +43,10 @@ class Comment < ApplicationRecord
   validates :files, limit: { max: 4 }
   
   belongs_to :commentable, polymorphic: true, counter_cache: :comments_count
-  belongs_to :parent, class_name: "Comment", foreign_key: 'parent_id', optional: true
+  belongs_to :parent, class_name: "Comment", foreign_key: 'parent_id', optional: true, touch: true
   # has_many :comments, inverse_of: 'parent'
   # has_many :comments, as: :commentable, dependent: :destroy
   has_many :replies, class_name: "Comment", inverse_of: 'parent', foreign_key: 'parent_id', dependent: :destroy 
-
-  # collapse comments at this depth
-  DEPTH = 2
 
   scope :root_comments, -> { where(parent: nil, depth: 1) }
   scope :replies_of, -> (comment) { where(parent: comment) }

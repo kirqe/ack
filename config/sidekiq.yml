@@ -1,4 +1,0 @@
-:schedule:
-  lock_worker:
-    cron: '0 2 * * *'   # At 02:00
-    class: LockWorker

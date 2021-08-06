@@ -17,7 +17,6 @@
       drop->uploads#onDrop"  
   }) do |f| %>
 
-
   <div class="field">
     <%= f.text_area :body, rows: 5, placeholder: "What are your thoughts?", class: "comment-body",
     data: { "uploads-target": "dropzone" } %>
@@ -31,7 +30,6 @@
   <% end %>
 
 <% else %>
-
   <div class="flex space-x-1 text-gray-600">
     <%= link_to "Log in", new_user_session_path, class: "text-primary underline" %>
     <span>or</span>

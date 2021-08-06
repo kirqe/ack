@@ -56,8 +56,7 @@ export default class extends Controller {
       success: (data) => {
         this.isLoading = false
         this.loaderTarget.classList.add("hidden")
-
-        this.commentsTarget.innerHTML = data.comments
+        this.commentsTarget.innerHTML = data.comments        
       }
     })
   }

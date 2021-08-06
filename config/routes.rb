@@ -1,14 +1,9 @@
-require 'sidekiq/web'
+
 Rails.application.routes.draw do   
   root to: "boards#index"
   devise_for :users, path: 'auth', 
   path_names: { sign_in: 'signin', sign_out: 'signout', sign_up: 'signup'},
   controllers: { registrations: "users/registrations" }
-
-  authenticate :user, lambda { |u| u.has_role?(:admin) } do
-    mount Sidekiq::Web => '/sidekiq'    
-  end
-  
 
   get 'boards/new', to: "boards#new", as: :new_board
 
@@ -17,7 +12,7 @@ Rails.application.routes.draw do
     resources :posts, path: '', except: :show
   end
 
-  resources :posts, path: '', only: [] do
+  resources :posts, path: 'p', only: [] do
     resources :comments, module: 'posts'
     resources :votes, only: [:create], module: 'posts'
 

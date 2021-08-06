@@ -11,7 +11,5 @@ Check the seeds file.
 
 ```
 rake db:create db:migrate db:seed
-redis-server
-bundle exec sidekiq
 rails s
 ```

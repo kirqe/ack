@@ -34,5 +34,11 @@ module ApplicationHelper
 
   def is_hg?(board) 
     params[:board_id] == board.slug
-  end  
+  end
+
+  def aaack
+    controller_name == "posts" && action_name == "show" ?
+      board_posts_path(@post.board.slug) :
+      request.original_url    
+  end
 end
