@@ -34,7 +34,7 @@ module Disqb
 
     # Don't generate system test files.
     config.generators.system_tests = nil
-    # config.autoloader = :classic
+    config.autoloader = :classic
 
     # config.active_storage.routes_prefix = '/s'
     # config.autoload_paths += %W(#{config.root}/lib)
