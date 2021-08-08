@@ -40,6 +40,7 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'factory_bot_rails'
   gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
+  gem 'spring'
 end
 
 group :development do  
@@ -47,7 +48,6 @@ group :development do
   gem 'rack-mini-profiler', '~> 2.0'
   gem 'listen', '~> 3.3'
   gem 'annotate'
-  gem 'spring'
 
   gem 'capistrano',         require: false
   gem 'capistrano-rbenv',   require: false
