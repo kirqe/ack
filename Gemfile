@@ -31,6 +31,8 @@ gem "pundit"
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 
+gem 'mailgun-ruby', '~>1.2.5'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -46,6 +48,13 @@ group :development do
   gem 'listen', '~> 3.3'
   gem 'annotate'
   gem 'spring'
+
+  gem 'capistrano',         require: false
+  gem 'capistrano-rbenv',   require: false
+  gem 'capistrano-rails',   require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano3-puma',   require: false
+  gem 'capistrano-rails-console', require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
