@@ -25,7 +25,7 @@ set :puma_worker_timeout, nil
 set :puma_init_active_record, true  # Change to false when not using ActiveRecord
 set :rbenv_ruby, '2.7.2'
 
-set :bundle_binstubs, -> { shared_path.join('bin') }
+set :keep_releases, 2
 
 ## Defaults:
 # set :scm,           :git
@@ -62,7 +62,6 @@ namespace :deploy do
     end
   end
   
-
   desc 'Initial Deploy'
   task :initial do
     on roles(:app) do
