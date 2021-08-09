@@ -1,11 +1,9 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.16.0"
-server '', port: '', user: '', roles: [:web, :app, :db], primary: true
 
 
 set :repo_url,        'git@github.com:kirqe/ack.git'
 set :application,     'aaack.xyz'
-set :user,            ''
 set :puma_threads,    [4, 16]
 set :puma_workers,    0
 
@@ -27,6 +25,7 @@ set :puma_worker_timeout, nil
 set :puma_init_active_record, true  # Change to false when not using ActiveRecord
 set :rbenv_ruby, '2.7.2'
 
+set :bundle_binstubs, -> { shared_path.join('bin') }
 
 ## Defaults:
 # set :scm,           :git
