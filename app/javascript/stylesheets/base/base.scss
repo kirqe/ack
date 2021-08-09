@@ -74,6 +74,12 @@ body {
   }
 }
 
+// USERS
+
+.gravatar {
+  @apply rounded-full mr-1 w-5 h-5;
+}
+
 // OTHER
 
 /* Hide scrollbar for Chrome, Safari and Opera */
