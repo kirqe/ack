@@ -6,7 +6,9 @@ app_dir = File.expand_path("../..", __FILE__)
 directory app_dir
 shared_dir = "#{app_dir}/tmp"
 
-stdout_redirect "#{app_dir}/log/puma.stdout.log", "#{app_dir}/log/puma.stderr.log", true
+if ENV.fetch("RAILS_ENV", "production")
+  stdout_redirect "#{app_dir}/log/puma.stdout.log", "#{app_dir}/log/puma.stderr.log", true
+end
 
 worker_timeout 3600 if ENV.fetch("RAILS_ENV", "development") == "development"
 

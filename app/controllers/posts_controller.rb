@@ -11,6 +11,10 @@ class PostsController < ApplicationController
     @posts = @posts.hidden if params[:filter] == "hidden"
     @posts = @posts.soft_deleted if params[:filter] == "deleted"
 
+    if params[:q]
+      @posts = @posts.where("name LIKE ?", "%#{params[:q]}%")
+    end
+
     @post = @board.posts.new
     
     respond_to do |format|

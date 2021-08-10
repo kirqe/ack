@@ -5,11 +5,14 @@ Rails.application.routes.draw do
   path_names: { sign_in: 'signin', sign_out: 'signout', sign_up: 'signup'},
   controllers: { registrations: "users/registrations" }
 
-  get 'boards/new', to: "boards#new", as: :new_board
+  get 'boards/new', to: "boards#new", as: :new_board  
 
+  
   resources :posts, path: 'p', only: [:show]
   resources :boards, path: '', shallow: true do
-    resources :posts, path: '', except: :show
+    resources :posts, path: '', except: :show do
+      get 'search', to: "posts#index", on: :collection
+    end
   end
 
   resources :posts, path: 'p', only: [] do

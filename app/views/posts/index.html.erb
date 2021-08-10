@@ -1,11 +1,11 @@
 <% content_for(:page_title) { @board.name } %>
 
-<div id="index" class="relative">
+<div id="index" class="relative" data-controller="search">
   <% if user_signed_in? %>
     <%= render partial: "posts/form", locals: { post: @post } %>
   <% end %>
 
-  <div class="filters text-xs text-primary-light flex justify-end absolute -top-5 right-0">
+  <div class="filters text-xs text-primary-light flex justify-between absolute -top-5 right-0">
     <ul class="flex space-x-1">
       <li><%= link_to "All", board_posts_path(@board.slug) %></li>      
       <li><%= link_to "Locked", filtered_board_posts_path(@board.slug, filter: :locked) %></li>
@@ -14,12 +14,24 @@
         <li><%= link_to "Hidden", filtered_board_posts_path(@board.slug, filter: :hidden) %></li>
         <li><%= link_to "Deleted", filtered_board_posts_path(@board.slug, filter: :deleted) %></li>   
       <% end %>
-    </ul>
+      <li><%= link_to "Search", "", data: { action: "click->search#toggleForm" } %></li>
+    </ul>    
   </div>
 
   <div class="posts" 
     data-controller="infinite-scroll" data-action="scroll@window->infinite-scroll#scroll">
     <div data-infinite-scroll-target="posts">
+
+      <div class="hidden" data-search-target="searchForm">
+        <%= form_tag(search_board_posts_path(@board.slug), method: :get, class: "form flex space-x-3") do %>
+          <div class="field flex-1">
+            <%= text_field_tag :q, params[:q], placeholder: "Search #{@board.name}" %>
+          </div>
+
+          <%= button_tag("Search", type: "submit", name: nil, class: "btn bg-primary mb-3") %>
+        <% end %>
+      </div>
+
       <% if @posts.any? %>
         <%= render @posts %>
       <% else %>
