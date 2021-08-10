@@ -20,6 +20,7 @@
 class Board < ApplicationRecord
   include Approvable
   include SoftDeletable
+  before_save :normalize_slug
 
   validates :name,
     presence: true,
@@ -36,4 +37,9 @@ class Board < ApplicationRecord
   has_many :posts, dependent: :destroy
 
   scope :ordered_by_post_count, -> { order("posts_count DESC") }
+  
+  private
+    def normalize_slug
+      self.slug = slug.to_slug.transliterate.normalize.to_s
+    end
 end

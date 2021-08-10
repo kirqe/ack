@@ -16,6 +16,8 @@
 #  sign_in_count          :integer          default(0), not null
 #  suspended_till         :datetime
 #  username               :string           default(""), not null
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
 #
 # Indexes
 #
@@ -37,7 +39,7 @@ class User < ApplicationRecord
   validates :username,
     presence: true,
     uniqueness: true,
-    length: { minimum: 3, maximum: 50 }, on: :create
+    length: { minimum: 3, maximum: 50 }
 
   has_many :posts
   has_many :votes

@@ -68,7 +68,7 @@ class Post < ApplicationRecord
     allow_blank: true
 
   belongs_to :user
-  belongs_to :board, counter_cache: :posts_count
+  belongs_to :board, counter_cache: :posts_count, touch: true
 
   has_many :votes, as: :votable, dependent: :destroy
   has_many :comments, as: :commentable, dependent: :destroy
@@ -82,6 +82,10 @@ class Post < ApplicationRecord
   
   scope :user_scope, -> { published.pinned_first.newest_first }
   scope :admin_scope, -> { pinned_first.newest_first }
+
+  def self.simple_search(term)
+    where("lower(name) LIKE ?", "%#{term.downcase}%")
+  end
 
   # friendly_id
   def normalize_friendly_id(text)

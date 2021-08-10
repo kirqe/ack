@@ -42,3 +42,5 @@ yarn-debug.log*
 coverage
 
 dump.rdb
+/public/sitemap*
+.env

@@ -66,29 +66,3 @@
 #settings {
   @apply text-sm;
 }
-
-
-
-
-// aka categors on top of the page
-
-#boards {
-  @apply text-sm;
-  @apply flex space-x-1;
-  @apply ns overflow-x-auto flex flex-nowrap;
-  @apply pb-3 mx-3 my-1;
-
-
-  .board {
-    @apply text-gray-500 font-bold;
-    @apply px-4 h-10 rounded-md border-2 bg-primary-lightest ;
-    @apply flex flex-grow-0 flex-shrink-0 items-center justify-center;
-    @apply border-primary-lighter;
-    &.current {
-      @apply text-white bg-primary border-primary;
-    }
-    &:hover {
-      @apply border-primary;
-    }    
-  }
-}

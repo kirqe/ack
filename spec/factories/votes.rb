@@ -22,7 +22,6 @@
 FactoryBot.define do
   factory :vote do
     user { create(:user) }
-    voted { false }
     votable { create(:post) }
   end
 end

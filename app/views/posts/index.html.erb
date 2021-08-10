@@ -1,12 +1,17 @@
-<% content_for(:page_title) { @board.name } %>
+<% set_meta_tags(default_meta_tags.merge({
+  title: @board.name,
+  description: @board.body,
+  keywords: @board.body.gsub(" ", ", "),
+  canonical: request.original_url
+})) %>
 
-<div id="index" class="relative" data-controller="search">
+<div id="index" class="relative" data-controller="search" data-search-term-value="<%= params[:q] %>">
   <% if user_signed_in? %>
     <%= render partial: "posts/form", locals: { post: @post } %>
   <% end %>
 
-  <div class="filters text-xs text-primary-light flex justify-between absolute -top-5 right-0">
-    <ul class="flex space-x-1">
+  <div class="filters subnav">
+    <ul class="subnav-item">
       <li><%= link_to "All", board_posts_path(@board.slug) %></li>      
       <li><%= link_to "Locked", filtered_board_posts_path(@board.slug, filter: :locked) %></li>
 

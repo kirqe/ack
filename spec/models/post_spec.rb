@@ -72,14 +72,14 @@ RSpec.describe Post, type: :model do
       expect(post).not_to be_valid
     end
 
-    it "is invalid if body length is not withing (3..5000)" do
+    it "is invalid if body length is not withing (10..40000)" do
       post = create(:post)
 
-      post.body = "body" * 1000
+      post.body = "a" * 40000
       expect(post).to be_valid
-      post.body = "na"
+      post.body = "a"
       expect(post).not_to be_valid
-      post.body = "body" * 2000
+      post.body = "a" * 50000
       expect(post).not_to be_valid
     end    
 
@@ -113,5 +113,15 @@ RSpec.describe Post, type: :model do
 
       expect(post.user).to eq(user)
     end
-  end  
+  end
+
+  describe "simple search" do
+    it "searches ignoring letter casing" do
+      create(:post, name: "Cinnamon cupCake")
+      create(:post, name: "cinnamon Cupcake receipe")
+
+      expect(Post.simple_search("Cupcake").count).to eq(2)
+      expect(Post.simple_search("receipe").count).to eq(1)
+    end
+  end
 end

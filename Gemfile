@@ -32,6 +32,10 @@ gem "pundit"
 gem 'bootsnap', '>= 1.4.4', require: false
 
 gem 'mailgun-ruby', '~>1.2.5'
+gem 'meta-tags'
+gem 'sitemap_generator'
+
+gem 'whenever', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -40,6 +44,7 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'factory_bot_rails'
   gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
+  gem 'dotenv-rails'
 end
 
 group :development do  
@@ -48,7 +53,6 @@ group :development do
   gem 'listen', '~> 3.3'
   gem 'annotate'
   gem "spring"
-
   gem 'capistrano',         require: false
   gem 'capistrano-rbenv',   require: false
   gem 'capistrano-rails',   require: false

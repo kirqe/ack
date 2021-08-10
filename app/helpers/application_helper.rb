@@ -33,12 +33,28 @@ module ApplicationHelper
   end
 
   def is_hg?(board) 
-    params[:board_id] == board.slug
+    if controller_name == "boards"
+      params[:board_id] == board.slug
+    elsif controller_name == "posts"
+      board.slug == @post.board.slug
+    end
   end
 
   def aaack
     controller_name == "posts" && action_name == "show" ?
       board_posts_path(@post.board.slug) :
       request.original_url    
+  end
+
+  def default_meta_tags
+    {
+      site: 'AAACK!',
+      title: 'ACK!',
+      reverse: true,
+      separator: '-',
+      description: 'A place to ack and ack with other people about the ack.',
+      keywords: 'aaack, ack, forum',
+      canonical: request.original_url     
+    }
   end
 end

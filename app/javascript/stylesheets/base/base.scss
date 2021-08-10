@@ -77,7 +77,7 @@ body {
 // USERS
 
 .gravatar {
-  @apply rounded-full mr-1 w-5 h-5;
+  @apply rounded-full w-5 h-5;
 }
 
 // OTHER
@@ -135,6 +135,14 @@ body {
   }
 }
 
+.subnav {
+  @apply text-xs text-primary-light flex justify-end absolute -top-5 right-0;
+
+  .subnav-item {
+    @apply flex space-x-1;
+  }
+}
+
 .disabled,
 input:disabled,
 button:disabled,
@@ -189,6 +197,15 @@ form:disabled {
   @apply underline;
 }
 
+.ack {
+  @apply duck-rotation absolute -top-2;
+  &.center {
+    @apply left-1/2;
+  }
+  &.right {
+    @apply right-0;
+  }
+}
 
 .duck {
   animation: duck 1s  cubic-bezier(0.280, 0.840, 0.420, 1) infinite;             

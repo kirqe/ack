@@ -1,7 +1,9 @@
-<div class="boards relative">
+<% set_meta_tags(default_meta_tags.merge(title: "")) %>
+
+<div id="boards">
   <% if user_signed_in? && current_user.has_role?(:admin) %>
-    <div class="filters text-xs text-primary-light flex justify-end absolute -top-5 right-0">
-      <ul class="flex space-x-1">
+    <div class="filters subnav">
+      <ul class="subnav-item">
         <li><%= link_to "Approved", filtered_boards_path(filter: :approved) %></li>
         <li><%= link_to "Pending", filtered_boards_path(filter: :pending) %></li>
         <li><%= link_to "Rejected", filtered_boards_path(filter: :rejected) %></li>
@@ -11,7 +13,7 @@
   <% end %>
   
   <% @boards.each do |board| %>
-    <div class="bg-primary-lightest p-4 mb-1 rounded-md flex justify-between items-center relative">
+    <div class="board">
       <%= render partial: "shared/manage_board", locals: { board: board } %>
 
       <div class="body">

@@ -1,0 +1,20 @@
+<% set_meta_tags(default_meta_tags.merge({
+  title: @user.username
+})) %>
+
+<div id="user-profile">
+  <div class="panel">
+    <div class="flex flex-col space-y-2 text-gray-600">
+      <div class="flex space-x-1 items-center">
+        <%= @user.gravatar   %>
+        <h1 class="text-xl font-bold"><%= @user.username %></h1>
+      </div>
+      <div class="stats space-y-3">
+        <div class="stats-item">
+          <p><strong>Status:</strong> <%= @user.roles.map(&:name).join(", ") %></p>
+          <p><strong>Joined:</strong> <%= time_ago_in_words(@user.created_at) %> ago</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

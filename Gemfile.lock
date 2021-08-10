@@ -120,6 +120,7 @@ GEM
       capistrano (~> 3.7)
       capistrano-bundler
       puma (>= 4.0, < 6.0)
+    chronic (0.10.2)
     concurrent-ruby (1.1.9)
     crass (1.0.6)
     devise (4.8.0)
@@ -131,6 +132,10 @@ GEM
     diff-lcs (1.4.4)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
+    dotenv (2.7.6)
+    dotenv-rails (2.7.6)
+      dotenv (= 2.7.6)
+      railties (>= 3.2)
     erubi (1.10.0)
     factory_bot (6.2.0)
       activesupport (>= 5.0.0)
@@ -161,6 +166,8 @@ GEM
     mailgun-ruby (1.2.5)
       rest-client (>= 2.0.2)
     marcel (1.0.1)
+    meta-tags (2.15.0)
+      actionpack (>= 3.2.0, < 6.2)
     method_source (1.0.0)
     mime-types (3.3.1)
       mime-types-data (~> 3.2015)
@@ -266,6 +273,8 @@ GEM
       sprockets-rails
       tilt
     semantic_range (3.0.0)
+    sitemap_generator (6.1.2)
+      builder (~> 3.0)
     spring (2.1.1)
     sprockets (4.0.2)
       concurrent-ruby (~> 1.0)
@@ -304,6 +313,8 @@ GEM
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
+    whenever (1.0.0)
+      chronic (>= 0.6.3)
     zeitwerk (2.4.2)
 
 PLATFORMS
@@ -324,12 +335,14 @@ DEPENDENCIES
   capistrano-rbenv
   capistrano3-puma
   devise
+  dotenv-rails
   factory_bot_rails
   faker!
   friendly_id (~> 5.4.0)
   jbuilder (~> 2.7)
   listen (~> 3.3)
   mailgun-ruby (~> 1.2.5)
+  meta-tags
   pagy
   pg (~> 1.1)
   puma (~> 5.0)
@@ -341,11 +354,13 @@ DEPENDENCIES
   rspec-rails
   sanitize
   sass-rails (>= 6)
+  sitemap_generator
   spring
   turbolinks (~> 5)
   tzinfo-data
   web-console (>= 4.1.0)
   webpacker (~> 5.0)
+  whenever
 
 RUBY VERSION
    ruby 2.7.2p137

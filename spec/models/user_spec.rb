@@ -16,6 +16,8 @@
 #  sign_in_count          :integer          default(0), not null
 #  suspended_till         :datetime
 #  username               :string           default(""), not null
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
 #
 # Indexes
 #
@@ -27,38 +29,33 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   describe "#valid?" do
-    it "is invalid when there's no ip or token" do
+    it "is invalid when ..." do
       user = create(:user)
       expect(user).to be_valid
       
-      user.ip = ""
-      expect(user).not_to be_valid
-    end
-
-    it "is invalid when token is not unique" do
-      user1 = create(:user)
-      user2 = create(:user)
-
-      user2.token = user1.token
-      expect(user2).not_to be_valid
+      user.username = ""
+      expect(user).not_to be_valid      
     end
   end
 
-  describe "#effects" do
-    it "generates user token before saving it" do
-      user = User.new(name: "john", ip: Faker::Internet.ip_v4_address)
-      user.save
-      
-      expect(user).to be_valid
-      expect(User.all.count).to eq(1)
-    end
-
-    it "generates a display name" do
-      user = User.new(name: "john", ip: Faker::Internet.ip_v4_address)
-      user.save
-      
-      expect(user.name).not_to be_empty
+  describe "#default role" do
+    it "has a default role :member on signup" do
+      user = create(:user)
+      expect(user.has_role?(:member)).to be_truthy
     end
   end
-  
+
+  describe "#user was soft deleted" do
+    it "username is no longer shown" do
+      post = create(:post)
+      post.user.soft_delete!
+      expect(post.user.username).to eq("[deleted user]")
+    end
+
+    it "user cant sign in" do
+      user = create(:user)
+      user.soft_delete!
+      expect(user.active_for_authentication?).to be_falsy
+    end
+  end
 end

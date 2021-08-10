@@ -10,10 +10,7 @@ class PostsController < ApplicationController
     @posts = @posts.locked if params[:filter] == "locked"
     @posts = @posts.hidden if params[:filter] == "hidden"
     @posts = @posts.soft_deleted if params[:filter] == "deleted"
-
-    if params[:q]
-      @posts = @posts.where("name LIKE ?", "%#{params[:q]}%")
-    end
+    @posts = @posts.simple_search(params[:q]) if params[:q]
 
     @post = @board.posts.new
     

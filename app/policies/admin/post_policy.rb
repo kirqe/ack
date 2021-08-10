@@ -18,6 +18,10 @@ class Admin::PostPolicy < Admin::AdminPolicy
     user.has_role?(:admin)
   end
 
+  def delete?
+    user.has_role?(:admin)
+  end
+
   class Scope
     attr_reader :user, :scope
 

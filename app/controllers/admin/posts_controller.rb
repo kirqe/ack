@@ -55,7 +55,7 @@ class Admin::PostsController < Admin::AdminController
       flash[:notice] = "#{@post.name} was successfully soft deleted." + " #{notice}"
     end
 
-    redirect_to post_path(@post)
+    redirect_to board_posts_path(@post.board.slug)
   end
 
 

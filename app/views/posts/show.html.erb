@@ -1,7 +1,11 @@
-<% content_for(:page_title) { @post.name } %>
+<% set_meta_tags(default_meta_tags.merge({
+  title: @post.name,
+  description: @post.body,
+  keywords: @post.slug.gsub("-", ", "),
+  canonical: request.original_url
+})) %>
 
-<div id="show" class="<%= 'locked' if @post.locked? %>">
-    
+<div id="show" class="<%= 'locked' if @post.locked? %>">    
   <div class="post-wrapper mb-6">
     <div class="side top relative">
     
@@ -34,7 +38,7 @@
 
     <div class="details relative">  
       
-      <span class="byline"><%= @post.byline %><%= render partial: "shared/manage_post", locals: { post: @post } %> </span>
+      <span class="byline"><%= @post.byline_linked %><%= render partial: "shared/manage_post", locals: { post: @post } %> </span>
       <h1 class="title"><%= @post.title %></h1>
       <span class="after"><%= @post.link %></span>
       <div class="text rich-text-view pt-6"><%= @post.rich_text %></div>      

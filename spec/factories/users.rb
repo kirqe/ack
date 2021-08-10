@@ -16,6 +16,8 @@
 #  sign_in_count          :integer          default(0), not null
 #  suspended_till         :datetime
 #  username               :string           default(""), not null
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
 #
 # Indexes
 #
@@ -25,7 +27,8 @@
 #
 FactoryBot.define do
   factory :user do
-    name { Faker::Name.name }
-    ip { Faker::Internet.ip_v4_address }
+    username { Faker::Internet.username(specifier: 3) }
+    email { Faker::Internet.email }
+    password { Faker::Internet.password(min_length: 8) }
   end
 end

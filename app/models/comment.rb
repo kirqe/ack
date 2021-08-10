@@ -25,7 +25,7 @@
 #
 class Comment < ApplicationRecord
   include SoftDeletable
-  belongs_to :user
+  belongs_to :user, counter_cache: :comments_count
   before_save :set_depth
   after_create :bump_or_lock_commentable
 

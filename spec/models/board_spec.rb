@@ -58,4 +58,36 @@ RSpec.describe Board, type: :model do
       expect(board).not_to be_valid
     end
   end
+
+  describe "#counter cache" do
+    it "increments when posts are added" do
+      board = create(:board)
+      expect(board.posts_count).to eq(0)
+
+      user = create(:user)
+
+      create(:post, user: user, board: board)
+      create(:post, user: user, board: board)
+      create(:post, user: user, board: board)
+      expect(board.posts_count).to eq(3)
+    end
+
+    it "decrements when posts are added" do
+      board = create(:board)
+      user = create(:user)
+      create(:post, user: user, board: board)
+      post = create(:post, user: user, board: board)
+      create(:post, user: user, board: board)
+      post.destroy!
+
+      expect(board.posts_count).to eq(2)
+    end
+  end
+
+  describe "slug" do
+    it "normalizes slug befor create" do
+      board = create(:board, slug: "hello there")      
+      expect(board.slug).to eq("hello-there")
+    end
+  end
 end

@@ -8,6 +8,11 @@ class ApplicationController < ActionController::Base
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
+  def index
+    flash.notice = "Sorry! Couldn't find that page. Bummer."
+    redirect_to root_path
+  end
+
   private
     def set_layout
       devise_controller? ? "auth" : "application"

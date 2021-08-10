@@ -31,10 +31,10 @@
 #
 FactoryBot.define do
   factory :post do
-    name { "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis n
-ostrud exercitation ullamco laboris nisi utt" }
-    url { "https://url-#{SecureRandom.hex(4)}.com" }
-    body { "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." }
+    name { Faker::Name.name }
+    url { Faker::Internet.url }
+    body { Faker::Lorem.paragraph(sentence_count: 3) }
     user { create(:user) }
+    board { create(:board) }
   end
 end

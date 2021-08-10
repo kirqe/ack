@@ -1,12 +1,12 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.16.0"
-
+server ENV["CAP_IP"], port: ENV["CAP_PORT"], user: ENV["CAP_USER"], roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'git@github.com:kirqe/ack.git'
-set :application,     'aaack.xyz'
+set :application,     ENV["CAP_APP_NAME"]
+set :user,            ENV["CAP_USER"]
 set :puma_threads,    [4, 16]
 set :puma_workers,    0
-
 
 # Don't change these unless you know what you're doing
 set :pty,             true
@@ -27,6 +27,8 @@ set :rbenv_ruby, '2.7.2'
 
 set :keep_releases, 2
 
+set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
+
 ## Defaults:
 # set :scm,           :git
 # set :branch,        :master
@@ -36,7 +38,7 @@ set :keep_releases, 2
 
 ## Linked Files & Directories (Default None):
 set :linked_files, %w{config/master.key}
-append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', '.bundle', 'public/system', 'public/uploads'
+append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', '.bundle', 'public/system', 'public/uploads', 'public/sitemaps'
 
 namespace :puma do
   desc 'Create Directories for Puma Pids and Socket'

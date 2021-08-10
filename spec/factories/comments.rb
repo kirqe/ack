@@ -25,10 +25,7 @@
 #
 FactoryBot.define do
   factory :comment do
-    user { nil }
-    body { "MyText" }
-    depth { 1 }
-    parent_id { "" }
-    commentable { nil }
+    user { create(:user) }
+    body { Faker::Lorem.paragraph(sentence_count: 3) }
   end
 end

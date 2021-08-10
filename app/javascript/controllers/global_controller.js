@@ -13,15 +13,13 @@ export default class extends Controller {
       }
     }
 
-    if (this.boardsNavWrapperTarget) {
-      let status = localStorage.getItem("isBoardsNavHidden")
-      if (status != null) {
-        if (localStorage.getItem("isBoardsNavHidden") == "false") {
+    if (this.hasBoardsNavWrapperTarget) {
+      let status = localStorage.getItem("isBoardsNavHidden")      
+        if (status != null && status == "false") {
           this.boardsNavWrapperTarget.classList.remove("hidden")
         } else {
           this.boardsNavWrapperTarget.classList.add("hidden")
-        }
-      }
+        }    
     }
   }
 

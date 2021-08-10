@@ -1,21 +1,20 @@
-
-Rails.application.routes.draw do   
+Rails.application.routes.draw do     
   root to: "boards#index"
   devise_for :users, path: 'auth', 
   path_names: { sign_in: 'signin', sign_out: 'signout', sign_up: 'signup'},
   controllers: { registrations: "users/registrations" }
 
+  match 'u/:username' => 'users#show', via: :get, as: :user
+  
   get 'boards/new', to: "boards#new", as: :new_board  
 
-  
-  resources :posts, path: 'p', only: [:show]
-  resources :boards, path: '', shallow: true do
+  resources :boards, path: '' do
     resources :posts, path: '', except: :show do
       get 'search', to: "posts#index", on: :collection
     end
   end
 
-  resources :posts, path: 'p', only: [] do
+  resources :posts, path: 'p', only: [:show] do
     resources :comments, module: 'posts'
     resources :votes, only: [:create], module: 'posts'
 
@@ -63,4 +62,8 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  get '*all', to: 'application#index', constraints: lambda { |req|
+    req.path.exclude? 'rails/active_storage'
+  }
 end

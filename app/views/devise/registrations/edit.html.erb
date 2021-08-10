@@ -1,5 +1,4 @@
-<% content_for(:page_title) { @user.username } %>
-
+<% set_meta_tags(default_meta_tags.merge(title: @user.username)) %>
 <div class="form-wrapper sm:w-96 mx-auto flex flex-col">
 <h1 class="text-2xl mb-3 font-bold text-gray-600">Account Settings</h1>
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "form" }) do |f| %>
