@@ -34,6 +34,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :trackable 
 
+  before_validation :normalize_username
   after_create :assign_default_role
 
   validates :username,
@@ -60,4 +61,9 @@ class User < ApplicationRecord
   def active_for_authentication?
     super && !self.soft_deleted?
   end
+
+  private
+    def normalize_username
+      self.username = username.to_slug.transliterate.normalize.to_s
+    end  
 end

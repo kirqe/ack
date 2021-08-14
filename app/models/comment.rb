@@ -25,7 +25,7 @@
 #
 class Comment < ApplicationRecord
   include SoftDeletable
-  belongs_to :user, counter_cache: :comments_count
+
   before_save :set_depth
   after_create :bump_or_lock_commentable
 
@@ -42,6 +42,7 @@ class Comment < ApplicationRecord
 
   validates :files, limit: { max: 4 }
   
+  belongs_to :user
   belongs_to :commentable, polymorphic: true, counter_cache: :comments_count
   belongs_to :parent, class_name: "Comment", foreign_key: 'parent_id', optional: true, touch: true
   # has_many :comments, inverse_of: 'parent'

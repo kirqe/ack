@@ -58,4 +58,14 @@ RSpec.describe User, type: :model do
       expect(user.active_for_authentication?).to be_falsy
     end
   end
+
+  describe "#username" do
+    it "normalizes username before save" do
+      user = create(:user, username: "cinnamon cupcake")
+      expect(user.username).to eq("cinnamon-cupcake")
+
+      user1 = build(:user, username:  "cinnaMon, cupcake"   )      
+      expect(user1).not_to be_valid
+    end
+  end
 end
