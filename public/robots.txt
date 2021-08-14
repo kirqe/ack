@@ -2,4 +2,4 @@ User-agent: *
 Disallow: /auth/*
 Disallow: /boards/new
 
-Sitemap: https://aaack.xyz/sitemap.xml.gz
+Sitemap: https://aaack.xyz/sitemaps/sitemap.xml.gz
