@@ -8,22 +8,24 @@
 
 app_dir = File.expand_path("../..", __FILE__)
 set :output, "#{app_dir}/log/crontab.log"
-env :PATH, ENV['PATH']
+set :env_path,    '"$HOME/.rbenv/shims":"$HOME/.rbenv/bin"'
+job_type :rake,   %q{ cd :path && PATH=:env_path:"$PATH" RAILS_ENV=:environment DISABLE_SPRING=true bin/rake :task --silent :output }
+job_type :rails,  %q{ cd :path && PATH=:env_path:"$PATH" RAILS_ENV=:environment DISABLE_SPRING=true bin/rails :task --silent :output }
 
 every 1.day, at: '3:00 am' do
-  rake "records:lock_old_posts"
+  rails "records:lock_old_posts"
 end
 
 every 3.days do
-  rake "records:purge_unattached"
+  rails "records:purge_unattached"
 end
 
 every 1.month, at: '4:00 am' do
-  rake "records:delete_old_records"
+  rails "records:delete_old_records"
 end
 
 every 1.day, :at => '4:30 am' do
-  rake "-s sitemap:refresh"
+  rails "-s sitemap:refresh"
 end
 
 # Learn more: http://github.com/javan/whenever

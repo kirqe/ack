@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-# idk DISABLE_SPRING=true. There seems to be an issue with spring that nobody wants to fix
 unless ENV['DISABLE_SPRING']
   begin
     load File.expand_path('../spring', __FILE__)
