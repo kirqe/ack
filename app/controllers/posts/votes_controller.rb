@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Posts
-  class VotesController < VotesController
+  class VotesController < ::VotesController
     before_action :set_votable
 
     private
