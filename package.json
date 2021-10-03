@@ -6,7 +6,7 @@
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "5.4.0",
-    "@simonwep/pickr": "^1.8.1",
+    "@simonwep/pickr": "^1.8.2",
     "autoprefixer": "^10.2.6",
     "lodash": "^4.17.21",
     "postcss": "^8.3.0",
