@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreatePosts < ActiveRecord::Migration[6.1]
   def change
     create_table :posts do |t|
@@ -13,7 +15,7 @@ class CreatePosts < ActiveRecord::Migration[6.1]
 
       t.integer :comments_count, default: 0
       t.integer :votes_count, default: 0
-      
+
       t.timestamps
     end
 

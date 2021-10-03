@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: boards
@@ -20,47 +22,47 @@
 require 'rails_helper'
 
 RSpec.describe Board, type: :model do
-  describe "#valid" do
-    it "is invalid when theres no name" do
+  describe '#valid' do
+    it 'is invalid when theres no name' do
       board = create(:board)
-      board.name = ""
+      board.name = ''
       expect(board).not_to be_valid
     end
 
-    it "is invalid when name is not within (3..50)" do
+    it 'is invalid when name is not within (3..50)' do
       board = create(:board)
-      board.name = ""
+      board.name = ''
       expect(board).not_to be_valid
 
-      board.name = "11" * 50
+      board.name = '11' * 50
       expect(board).not_to be_valid
 
-      board.name = "12345"
-      expect(board).to be_valid      
-    end    
+      board.name = '12345'
+      expect(board).to be_valid
+    end
 
-    it "is invalid when theres no slug" do
+    it 'is invalid when theres no slug' do
       board = create(:board)
-      board.slug = ""
+      board.slug = ''
       expect(board).not_to be_valid
     end
 
-    it "is invalid when slug is not unique" do
+    it 'is invalid when slug is not unique' do
       board1 = create(:board)
       board2 = create(:board)
       board2.slug = board1.slug
       expect(board2).not_to be_valid
     end
 
-    it "is invalid when body is too long (>500)" do
+    it 'is invalid when body is too long (>500)' do
       board = create(:board)
-      board.body = "123" * 1000
+      board.body = '123' * 1000
       expect(board).not_to be_valid
     end
   end
 
-  describe "#counter cache" do
-    it "increments when posts are added" do
+  describe '#counter cache' do
+    it 'increments when posts are added' do
       board = create(:board)
       expect(board.posts_count).to eq(0)
 
@@ -72,7 +74,7 @@ RSpec.describe Board, type: :model do
       expect(board.posts_count).to eq(3)
     end
 
-    it "decrements when posts are added" do
+    it 'decrements when posts are added' do
       board = create(:board)
       user = create(:user)
       create(:post, user: user, board: board)
@@ -84,10 +86,10 @@ RSpec.describe Board, type: :model do
     end
   end
 
-  describe "slug" do
-    it "normalizes slug befor create" do
-      board = create(:board, slug: "hello there")      
-      expect(board.slug).to eq("hello-there")
+  describe 'slug' do
+    it 'normalizes slug befor create' do
+      board = create(:board, slug: 'hello there')
+      expect(board.slug).to eq('hello-there')
     end
   end
 end

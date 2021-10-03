@@ -1,26 +1,29 @@
-class Admin::CommentPolicy < Admin::AdminPolicy
-  attr_reader :user, :comment
+# frozen_string_literal: true
 
-  def initialize(user, comment)
-    @user = user
-    @comment = comment
-  end
+module Admin
+  class CommentPolicy < Admin::AdminPolicy
+    attr_reader :user, :comment
 
-  def delete?
-    user.has_role?(:admin) && !comment.user.has_role?(:admin) || comment.user == user
-  end
-
-  class Scope
-    attr_reader :user, :scope
-
-    def initialize(user, scope)
+    def initialize(user, comment)
       @user = user
-      @scope = scope
+      @comment = comment
+      super
     end
 
-    def resolve
-      if user && user.has_role?(:admin)
-        scope.all    
+    def delete?
+      (user.has_role?(:admin) && !comment.user.has_role?(:admin)) || comment.user == user
+    end
+
+    class Scope
+      attr_reader :user, :scope
+
+      def initialize(user, scope)
+        @user = user
+        @scope = scope
+      end
+
+      def resolve
+        scope.all if user&.has_role?(:admin)
       end
     end
   end

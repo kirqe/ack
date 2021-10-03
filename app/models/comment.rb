@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: comments
@@ -31,41 +33,42 @@ class Comment < ApplicationRecord
 
   has_many_attached :files
 
-  validates :body, 
-    presence: true, 
-    length: { 
-      minimum: 3, 
-      maximum: 5000, 
-      too_short: "is too short",
-      too_long: "is too long"
-    }
+  validates :body,
+            presence: true,
+            length: {
+              minimum: 3,
+              maximum: 5000,
+              too_short: 'is too short',
+              too_long: 'is too long'
+            }
 
   validates :files, limit: { max: 4 }
-  
+
   belongs_to :user
   belongs_to :commentable, polymorphic: true, counter_cache: :comments_count
-  belongs_to :parent, class_name: "Comment", foreign_key: 'parent_id', optional: true, touch: true
+  belongs_to :parent, class_name: 'Comment', foreign_key: 'parent_id', optional: true, touch: true
   # has_many :comments, inverse_of: 'parent'
   # has_many :comments, as: :commentable, dependent: :destroy
-  has_many :replies, class_name: "Comment", inverse_of: 'parent', foreign_key: 'parent_id', dependent: :destroy 
+  has_many :replies, class_name: 'Comment', inverse_of: 'parent', foreign_key: 'parent_id', dependent: :destroy
 
   scope :root_comments, -> { where(parent: nil, depth: 1) }
-  scope :replies_of, -> (comment) { where(parent: comment) }
+  scope :replies_of, ->(comment) { where(parent: comment) }
 
   def body
-    self.soft_deleted? ? "[this comment was deleted]" : read_attribute(:body)
+    soft_deleted? ? '[this comment was deleted]' : read_attribute(:body)
   end
 
   private
-    def set_depth
-      self.depth = (parent.depth + 1) if parent
-    end
 
-    def bump_or_lock_commentable
-      if self.updated_at < Post::LOCK_AFTER.ago
-        self.commentable.lock!
-      else
-        self.commentable.touch
-      end      
+  def set_depth
+    self.depth = (parent.depth + 1) if parent
+  end
+
+  def bump_or_lock_commentable
+    if updated_at < Post::LOCK_AFTER.ago
+      commentable.lock!
+    else
+      commentable.touch
     end
+  end
 end

@@ -1,29 +1,33 @@
-class Admin::CommentsController < Admin::AdminController
-  before_action :set_comment
+# frozen_string_literal: true
 
-  def delete
-    if @comment.soft_deleted?
-      @comment.restore!
-      flash[:notice] = "comment ##{@comment.id} was successfully restored"
-    else
-      @comment.soft_delete!
+module Admin
+  class CommentsController < Admin::AdminController
+    before_action :set_comment
 
-      if params[:suspend]
-        @comment.user.suspend! 
-        notice = "And #{@comment.user.username} suspended."
-      elsif params[:ban]
-        @comment.user.suspend!(36500)
-        notice = "And #{@comment.user.username} banned."
+    def delete
+      if @comment.soft_deleted?
+        @comment.restore!
+        flash[:notice] = "comment ##{@comment.id} was successfully restored"
+      else
+        @comment.soft_delete!
+
+        if params[:suspend]
+          @comment.user.suspend!
+          notice = "And #{@comment.user.username} suspended."
+        elsif params[:ban]
+          @comment.user.suspend!(36_500)
+          notice = "And #{@comment.user.username} banned."
+        end
+
+        flash[:notice] = "Comment ##{@comment.id} was successfully soft deleted." + " #{notice}"
       end
 
-      flash[:notice] = "Comment ##{@comment.id} was successfully soft deleted." + " #{notice}"
+      redirect_to post_path(@comment.commentable)
     end
 
-    redirect_to post_path(@comment.commentable)
-  end
-
-  def set_comment
-    @comment = Comment.find(params[:id])
-    authorize([:admin, @comment])
+    def set_comment
+      @comment = Comment.find(params[:id])
+      authorize([:admin, @comment])
+    end
   end
 end

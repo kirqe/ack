@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module Lockable
   extend ActiveSupport::Concern
 
   included do
     scope :locked, -> { where.not(locked_at: nil) }
-    scope :locked_first, -> { order("locked_at ASC") }
+    scope :locked_first, -> { order('locked_at ASC') }
   end
 
   def lock!
@@ -16,5 +18,5 @@ module Lockable
 
   def locked?
     !locked_at.nil?
-  end  
+  end
 end

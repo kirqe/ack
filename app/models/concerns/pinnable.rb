@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module Pinnable
   extend ActiveSupport::Concern
 
   included do
     scope :pinned, -> { where.not(pinned_at: nil) }
-    scope :pinned_first, -> { order("pinned_at ASC") }
+    scope :pinned_first, -> { order('pinned_at ASC') }
   end
 
   def pin!

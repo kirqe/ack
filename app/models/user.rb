@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: users
@@ -32,15 +34,15 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, :trackable 
+         :recoverable, :rememberable, :validatable, :trackable
 
   before_validation :normalize_username
   after_create :assign_default_role
 
   validates :username,
-    presence: true,
-    uniqueness: true,
-    length: { minimum: 3, maximum: 50 }
+            presence: true,
+            uniqueness: true,
+            length: { minimum: 3, maximum: 50 }
 
   has_many :posts
   has_many :votes
@@ -51,19 +53,20 @@ class User < ApplicationRecord
   end
 
   def assign_default_role
-    self.add_role(:member) if self.roles.blank?
+    add_role(:member) if roles.blank?
   end
-  
+
   def username
-    self.soft_deleted? ? "[deleted user]" : read_attribute(:username)
+    soft_deleted? ? '[deleted user]' : read_attribute(:username)
   end
 
   def active_for_authentication?
-    super && !self.soft_deleted?
+    super && !soft_deleted?
   end
 
   private
-    def normalize_username
-      self.username = username.to_slug.transliterate.normalize.to_s
-    end  
+
+  def normalize_username
+    self.username = username.to_slug.transliterate.normalize.to_s
+  end
 end

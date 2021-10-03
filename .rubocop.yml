@@ -1,0 +1,35 @@
+AllCops:
+  TargetRubyVersion: 2.7.2
+  NewCops: enable
+  CacheRootDirectory: tmp
+  Exclude:
+    - 'db/schema.rb'
+    - 'vendor/**/*'
+    - 'bin/**/*'
+    - 'tmp/**/*'
+
+Metrics/AbcSize:
+  Max: 54
+
+Metrics/CyclomaticComplexity:
+  Max: 13
+
+Metrics/ClassLength:
+  Max: 183
+
+Metrics/MethodLength:
+  Max: 81
+
+Metrics/ModuleLength:
+  Max: 119
+
+Metrics/BlockLength:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Layout/LineLength:
+  Max: 120
+  Exclude:
+    - 'config/initializers/devise.rb'

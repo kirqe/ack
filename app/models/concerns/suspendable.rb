@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Suspendable
   extend ActiveSupport::Concern
 
@@ -5,8 +7,8 @@ module Suspendable
     scope :suspended, -> { where.not(suspended_till: nil) }
   end
 
-  def suspend!(n=1)
-    update!(suspended_till: DateTime.now + n.days)
+  def suspend!(num = 1)
+    update!(suspended_till: DateTime.now + num.days)
   end
 
   def resume!

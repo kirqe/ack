@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Approvable
   extend ActiveSupport::Concern
 
@@ -21,13 +23,13 @@ module Approvable
 
   def approved?
     !approved_at.nil?
-  end  
+  end
 
   def rejected?
     !rejected_at.nil?
-  end  
+  end
 
   def pending?
     rejected_at.nil? && approved_at.nil?
-  end  
+  end
 end

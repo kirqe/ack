@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: boards
@@ -23,23 +25,24 @@ class Board < ApplicationRecord
   before_save :normalize_slug
 
   validates :name,
-    presence: true,
-    length: { minimum: 3, maximum: 50 }
+            presence: true,
+            length: { minimum: 3, maximum: 50 }
 
   validates :slug,
-    presence: true,
-    uniqueness: true
+            presence: true,
+            uniqueness: true
 
   validates :body,
-    presence: true,
-    length: { minimum: 0, maximum: 150 }
+            presence: true,
+            length: { minimum: 0, maximum: 150 }
 
   has_many :posts, dependent: :destroy
 
-  scope :ordered_by_post_count, -> { order("posts_count DESC") }
-  
+  scope :ordered_by_post_count, -> { order('posts_count DESC') }
+
   private
-    def normalize_slug
-      self.slug = slug.to_slug.transliterate.normalize.to_s
-    end
+
+  def normalize_slug
+    self.slug = slug.to_slug.transliterate.normalize.to_s
+  end
 end

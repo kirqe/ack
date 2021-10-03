@@ -1,16 +1,18 @@
-Rails.application.routes.draw do     
-  root to: "boards#index"
-  devise_for :users, path: 'auth', 
-  path_names: { sign_in: 'signin', sign_out: 'signout', sign_up: 'signup'},
-  controllers: { registrations: "users/registrations" }
+# frozen_string_literal: true
+
+Rails.application.routes.draw do
+  root to: 'boards#index'
+  devise_for :users, path: 'auth',
+                     path_names: { sign_in: 'signin', sign_out: 'signout', sign_up: 'signup' },
+                     controllers: { registrations: 'users/registrations' }
 
   match 'u/:username' => 'users#show', via: :get, as: :user
-  
-  get 'boards/new', to: "boards#new", as: :new_board  
+
+  get 'boards/new', to: 'boards#new', as: :new_board
 
   resources :boards, path: '' do
     resources :posts, path: '', except: :show do
-      get 'search', to: "posts#index", on: :collection
+      get 'search', to: 'posts#index', on: :collection
     end
   end
 
@@ -20,12 +22,12 @@ Rails.application.routes.draw do
 
     # @votable cant be set for some reason
     # member do
-    #   post "vote", to: "votes#create"  
+    #   post "vote", to: "votes#create"
     # end
   end
-  
-  get "f/:filter", to: "boards#index", as: :filtered_boards
-  get ":board_id/:filter", to: "posts#index", as: :filtered_board_posts
+
+  get 'f/:filter', to: 'boards#index', as: :filtered_boards
+  get ':board_id/:filter', to: 'posts#index', as: :filtered_board_posts
 
   resources :comments do
     resources :comments
@@ -38,7 +40,7 @@ Rails.application.routes.draw do
         patch 'reject'
         patch 'delete'
         patch 'reset'
-      end      
+      end
     end
 
     resources :posts, only: [] do

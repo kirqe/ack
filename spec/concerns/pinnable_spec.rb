@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Pinnable, type: :concern do
-  it "pins/unpins" do
+  it 'pins/unpins' do
     post = create(:post)
     expect(post.pinned?).to be_falsey
 
@@ -12,8 +14,8 @@ RSpec.describe Pinnable, type: :concern do
     expect(post.pinned?).to be_falsey
   end
 
-  it "scopes" do
-    create(:post)    
+  it 'scopes' do
+    create(:post)
     create(:post)
     post1 = create(:post)
     post1.pin!

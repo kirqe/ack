@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Lockable, type: :concern do
-  it "locks/unlocks" do
+  it 'locks/unlocks' do
     post = create(:post)
     expect(post.locked?).to be_falsey
 
@@ -12,8 +14,8 @@ RSpec.describe Lockable, type: :concern do
     expect(post.locked?).to be_falsey
   end
 
-  it "scopes" do
-    create(:post)    
+  it 'scopes' do
+    create(:post)
     create(:post)
     post1 = create(:post)
     post1.lock!

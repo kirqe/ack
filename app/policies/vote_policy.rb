@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
 class VotePolicy < ApplicationPolicy
   attr_reader :user, :vote
 
   def initialize(user, vote)
     @user = user
     @vote = vote
+    super
   end
 
   def create?
@@ -19,9 +22,7 @@ class VotePolicy < ApplicationPolicy
     end
 
     def resolve
-      if user && user.has_role?(:admin)
-        scope.all
-      end
+      scope.all if user&.has_role?(:admin)
     end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddTimestampsToUsers < ActiveRecord::Migration[6.1]
   def change
     add_timestamps :users, default: Time.zone.now

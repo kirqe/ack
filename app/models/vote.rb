@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: votes
@@ -26,11 +28,12 @@ class Vote < ApplicationRecord
   belongs_to :votable, polymorphic: true, counter_cache: :votes_count
 
   private
+
   def bump_or_lock_votable
-    if self.updated_at < Post::LOCK_AFTER.ago
-      self.votable.lock!
+    if updated_at < Post::LOCK_AFTER.ago
+      votable.lock!
     else
-      self.votable.touch
-    end      
+      votable.touch
+    end
   end
 end

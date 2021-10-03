@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Approvable, type: :concern do
-  it "publish/unpublish" do
+  it 'publish/unpublish' do
     board = create(:board)
     expect(board.approved?).to be_falsey
 
@@ -19,12 +21,12 @@ RSpec.describe Approvable, type: :concern do
     expect(board.pending?).to be_truthy
   end
 
-  it "scopes" do
+  it 'scopes' do
     create(:board).approve!
     create(:board).approve!
     create(:board).reject!
     create(:board)
-    
+
     expect(Board.approved.count).to eq(2)
     expect(Board.rejected.count).to eq(1)
     expect(Board.pending.count).to eq(1)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: posts
@@ -11,5 +13,6 @@
 #
 require 'rails_helper'
 
-RSpec.describe PostsHelper, type: :helper do  
+RSpec.describe PostsHelper, type: :helper do
+  # impl
 end

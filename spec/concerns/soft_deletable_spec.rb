@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe SoftDeletable, type: :concern do
-  it "soft deletes/undeletes" do
+  it 'soft deletes/undeletes' do
     post = create(:post)
     expect(post.soft_deleted?).to be_falsey
 
@@ -12,8 +14,8 @@ RSpec.describe SoftDeletable, type: :concern do
     expect(post.soft_deleted?).to be_falsey
   end
 
-  it "scopes" do
-    create(:post)    
+  it 'scopes' do
+    create(:post)
     create(:post)
     post1 = create(:post)
     post1.soft_delete!

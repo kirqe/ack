@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
 class BoardPolicy < ApplicationPolicy
   attr_reader :user, :board
 
   def initialize(user, board)
     @user = user
     @board = board
+    super
   end
 
   def index?
@@ -15,7 +18,7 @@ class BoardPolicy < ApplicationPolicy
   end
 
   def show?
-    board.approved? || (user && user.has_role?(:admin))
+    board.approved? || user&.has_role?(:admin)
   end
 
   def create?
@@ -31,7 +34,7 @@ class BoardPolicy < ApplicationPolicy
     end
 
     def resolve
-      if user && user.has_role?(:admin)
+      if user&.has_role?(:admin)
         scope.all
       else
         scope.approved

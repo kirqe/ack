@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module SoftDeletable
   extend ActiveSupport::Concern
 
   included do
     scope :soft_deleted, -> { where.not(deleted_at: nil) }
-    scope :deleted_first, -> { order("deleted_at ASC") }
+    scope :deleted_first, -> { order('deleted_at ASC') }
   end
 
   def soft_delete!

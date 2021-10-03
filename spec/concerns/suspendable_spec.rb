@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Suspendable, type: :concern do
-  it "suspends/resumes" do
+  it 'suspends/resumes' do
     user = create(:user)
     expect(user.suspended?).to be_falsey
 
@@ -17,11 +19,11 @@ RSpec.describe Suspendable, type: :concern do
     expect(user.suspended?).to be_falsey
   end
 
-  it "scopes" do
-    create(:user)    
+  it 'scopes' do
+    create(:user)
     create(:user).suspend!
     create(:user)
-    
+
     expect(User.suspended.count).to eq(1)
   end
 end

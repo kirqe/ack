@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: votes
@@ -22,4 +24,5 @@
 require 'rails_helper'
 
 RSpec.describe Vote, type: :model do
+  # impl
 end

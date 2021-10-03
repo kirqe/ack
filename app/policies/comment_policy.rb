@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
 class CommentPolicy < ApplicationPolicy
   attr_reader :user, :comment
 
   def initialize(user, comment)
     @user = user
     @comment = comment
+    super
   end
 
   def create?

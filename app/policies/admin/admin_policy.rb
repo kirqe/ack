@@ -1,49 +1,54 @@
-class Admin::AdminPolicy < ApplicationPolicy
-  attr_reader :user, :record
+# frozen_string_literal: true
 
-  def initialize(user, record)
-    @user = user
-    @record = record
-  end
+module Admin
+  class AdminPolicy < ApplicationPolicy
+    attr_reader :user, :record
 
-  def index?
-    false
-  end
-
-  def show?
-    false
-  end
-
-  def create?
-    false
-  end
-
-  def new?
-    create?
-  end
-
-  def update?
-    false
-  end
-
-  def edit?
-    update?
-  end
-
-  def destroy?
-    false
-  end
-
-  class Scope
-    attr_reader :user, :scope
-
-    def initialize(user, scope)
+    def initialize(user, record)
       @user = user
-      @scope = scope
+      @record = record
+      super
     end
 
-    def resolve
-      scope.all
+    def index?
+      false
+    end
+
+    def show?
+      false
+    end
+
+    def create?
+      false
+    end
+
+    def new?
+      create?
+    end
+
+    def update?
+      false
+    end
+
+    def edit?
+      update?
+    end
+
+    def destroy?
+      false
+    end
+
+    class Scope
+      attr_reader :user, :scope
+
+      def initialize(user, scope)
+        @user = user
+        @scope = scope
+      end
+
+      def resolve
+        scope.all
+      end
     end
   end
 end

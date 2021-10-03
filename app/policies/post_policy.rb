@@ -1,17 +1,20 @@
+# frozen_string_literal: true
+
 class PostPolicy < ApplicationPolicy
   attr_reader :user, :post
 
   def initialize(user, post)
     @user = user
     @post = post
+    super
   end
 
   def index?
     true
   end
 
-  def show?    
-    (post.board.approved? && post.published? && !post.soft_deleted?) || (user && user.has_role?(:admin))
+  def show?
+    (post.board.approved? && post.published? && !post.soft_deleted?) || user&.has_role?(:admin)
   end
 
   def create?
@@ -31,11 +34,11 @@ class PostPolicy < ApplicationPolicy
     end
 
     def resolve
-      if user && user.has_role?(:admin)
+      if user&.has_role?(:admin)
         scope.all
       else
         scope.published
       end
     end
-  end  
+  end
 end

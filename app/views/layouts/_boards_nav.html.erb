@@ -1,8 +1,8 @@
 <div data-global-target="boardsNavWrapper" class="hidden">
-  <div id="boards-nav" data-controller="boards-nav" data-boards-nav-target="boards">          
+  <div id="boards-nav" data-controller="boards-nav" data-boards-nav-target="boards">
     <% Board.approved.ordered_by_post_count.each do |board| %>
-      <%= link_to board.name, board_path(board.slug), 
-        class: "board #{'current' if is_hg?(board)}" %>     
-    <% end %>                     
+      <%= link_to board.name, board_path(board.slug),
+        class: "board #{'current' if hg?(board)}" %>
+    <% end %>
   </div>
 </div>

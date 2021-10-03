@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: roles
@@ -15,7 +17,6 @@
 #  index_roles_on_resource                                (resource_type,resource_id)
 #
 FactoryBot.define do
-  factory :role do
-    
-  end
+  # factory :role do
+  # end
 end

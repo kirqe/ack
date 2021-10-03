@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: posts
@@ -43,29 +45,29 @@ class Post < ApplicationRecord
 
   LOCK_AFTER = 7.days # after the latest comment/vote have been cast
 
-  validates :name, 
-    presence: true,
-    length: { 
-      minimum:3, 
-      maximum: 250, 
-      too_short: "is too short", 
-      too_long: "is too long" 
-    }
+  validates :name,
+            presence: true,
+            length: {
+              minimum: 3,
+              maximum: 250,
+              too_short: 'is too short',
+              too_long: 'is too long'
+            }
 
-  validates :url, 
-    presence: true,
-    format: { with: URI::DEFAULT_PARSER.regexp[:ABS_URI] },
-    allow_blank: true
+  validates :url,
+            presence: true,
+            format: { with: URI::DEFAULT_PARSER.regexp[:ABS_URI] },
+            allow_blank: true
 
   validates :body,
-    presence: true,
-    length: { 
-      minimum:10, 
-      maximum: 40000, 
-      too_short: "is too short",
-      too_long: "is too long" 
-    },
-    allow_blank: true
+            presence: true,
+            length: {
+              minimum: 10,
+              maximum: 40_000,
+              too_short: 'is too short',
+              too_long: 'is too long'
+            },
+            allow_blank: true
 
   belongs_to :user
   belongs_to :board, counter_cache: :posts_count, touch: true
@@ -75,29 +77,29 @@ class Post < ApplicationRecord
 
   has_many_attached :files
 
-  scope :newest_first, -> { order("created_at DESC") }
-  scope :top_rated, -> { order("votes_count DESC") }
-  scope :recently_active, -> { order("updated_at DESC") }
-  scope :newest_and_top_rated, -> { top_rated.newest_first }  
-  
+  scope :newest_first, -> { order('created_at DESC') }
+  scope :top_rated, -> { order('votes_count DESC') }
+  scope :recently_active, -> { order('updated_at DESC') }
+  scope :newest_and_top_rated, -> { top_rated.newest_first }
+
   scope :user_scope, -> { published.pinned_first.newest_first }
   scope :admin_scope, -> { pinned_first.newest_first }
 
   def self.simple_search(term)
-    where("lower(name) LIKE ?", "%#{term.downcase}%")
+    where('lower(name) LIKE ?', "%#{term.downcase}%")
   end
 
   # friendly_id
   def normalize_friendly_id(text)
     text.to_slug.transliterate.normalize.to_s
   end
-  
+
   def should_generate_new_friendly_id?
     name_changed?
   end
 
   # callbacks
   def strip_link
-    self.url.strip!
+    url.strip!
   end
 end

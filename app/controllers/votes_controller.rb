@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class VotesController < ApplicationController
   before_action :authenticate_user!
 
@@ -6,7 +8,7 @@ class VotesController < ApplicationController
 
     if vote
       authorize vote
-      
+
       vote.destroy
     else
       vote = @votable.votes.new
@@ -15,7 +17,7 @@ class VotesController < ApplicationController
       authorize vote
       vote.save
     end
-    
-    render json: { votes: @votable.votes_count }      
+
+    render json: { votes: @votable.votes_count }
   end
 end

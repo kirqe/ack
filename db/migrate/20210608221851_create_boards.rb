@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateBoards < ActiveRecord::Migration[6.1]
   def change
     create_table :boards do |t|
@@ -13,6 +15,6 @@ class CreateBoards < ActiveRecord::Migration[6.1]
 
       t.timestamps
     end
-    add_index :boards, :slug, unique: true    
+    add_index :boards, :slug, unique: true
   end
 end

@@ -1,34 +1,37 @@
-class Admin::BoardPolicy < Admin::AdminPolicy
-  attr_reader :user, :board
+# frozen_string_literal: true
 
-  def initialize(user, board)
-    @user = user
-    @board = board
-  end
+module Admin
+  class BoardPolicy < Admin::AdminPolicy
+    attr_reader :user, :board
 
-  def approve?
-    user.has_role?(:admin)
-  end
-
-  def reject?
-    user.has_role?(:admin)
-  end
-  
-  def delete?
-    user.has_role?(:admin)
-  end
-
-  class Scope
-    attr_reader :user, :scope
-
-    def initialize(user, scope)
+    def initialize(user, board)
       @user = user
-      @scope = scope
+      @board = board
+      super
     end
 
-    def resolve
-      if user && user.has_role?(:admin)
-        scope.all
+    def approve?
+      user.has_role?(:admin)
+    end
+
+    def reject?
+      user.has_role?(:admin)
+    end
+
+    def delete?
+      user.has_role?(:admin)
+    end
+
+    class Scope
+      attr_reader :user, :scope
+
+      def initialize(user, scope)
+        @user = user
+        @scope = scope
+      end
+
+      def resolve
+        scope.all if user&.has_role?(:admin)
       end
     end
   end
