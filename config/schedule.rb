@@ -12,11 +12,11 @@ app_dir = File.expand_path('..', __dir__)
 set :output, "#{app_dir}/log/crontab.log"
 set :env_path, '"$HOME/.rbenv/shims":"$HOME/.rbenv/bin"'
 job_type :rake,
-         ' cd :path && PATH=:env_path:"$PATH"'\
-         'RAILS_ENV=:environment DISABLE_SPRING=true bin/rake :task --silent :output '
+         ' cd :path && PATH=:env_path:"$PATH" ' \
+         ' RAILS_ENV=:environment DISABLE_SPRING=true bin/rake :task --silent :output '
 job_type :rails,
-         ' cd :path && PATH=:env_path:"$PATH"'\
-         'RAILS_ENV=:environment DISABLE_SPRING=true bin/rails :task --silent :output '
+         ' cd :path && PATH=:env_path:"$PATH" ' \
+         ' RAILS_ENV=:environment DISABLE_SPRING=true bin/rails :task --silent :output '
 
 every 1.day, at: '3:00 am' do
   rails 'records:lock_old_posts'
