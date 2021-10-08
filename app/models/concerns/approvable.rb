@@ -4,7 +4,11 @@ module Approvable
   extend ActiveSupport::Concern
 
   included do
-    scope :approved, -> { where(rejected_at: nil).and(where.not(approved_at: nil)) }
+    scope :approved, lambda {
+      where(rejected_at: nil)
+        .and(where.not(approved_at: nil))
+        .and(where(deleted_at: nil))
+    }
     scope :rejected, -> { where(approved_at: nil).and(where.not(rejected_at: nil)) }
     scope :pending, -> { where(approved_at: nil, rejected_at: nil) }
   end

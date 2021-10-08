@@ -7,7 +7,7 @@ module Admin
     def delete
       if @comment.soft_deleted?
         @comment.restore!
-        flash[:notice] = "comment ##{@comment.id} was successfully restored"
+        flash[:notice] = "comment #{@comment.id} was successfully restored"
       else
         @comment.soft_delete!
 
@@ -19,7 +19,7 @@ module Admin
           notice = "And #{@comment.user.username} banned."
         end
 
-        flash[:notice] = "Comment ##{@comment.id} was successfully soft deleted." + " #{notice}"
+        flash[:notice] = "Comment #{@comment.id} was successfully soft deleted." + " #{notice}"
       end
 
       redirect_to post_path(@comment.commentable)
